@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categoría - PIXEL SAN</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <button class="menu-toggle" aria-label="Toggle menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+                
+                <h1 class="site-title">PIXEL SAN</h1>
+                
+                <div class="header-actions">
+                    <button class="search-btn" aria-label="Search">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.35-4.35"></path>
+                        </svg>
+                    </button>
+                    <button class="theme-toggle" aria-label="Toggle theme">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <p class="site-subtitle">Juegos, Tecnología y más</p>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="container">
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">INICIO</a></li>
+                <li><a href="category.html?category=roblox" class="nav-link">ROBLOX</a></li>
+                <li><a href="category.html?category=free-fire" class="nav-link">FREE FIRE</a></li>
+                <li><a href="category.html?category=codigos" class="nav-link">CÓDIGOS</a></li>
+                <li><a href="category.html?category=diamantes" class="nav-link">DIAMANTES</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Loading State -->
+            <div id="loading-state" class="loading-state">
+                <div class="spinner"></div>
+                <p>Cargando contenido...</p>
+            </div>
+
+            <!-- Category Content -->
+            <div id="category-content" class="category-content" style="display: none;">
+                <!-- Breadcrumb -->
+                <nav class="breadcrumb">
+                    <a href="index.html">Inicio</a>
+                    <span>/</span>
+                    <span id="category-breadcrumb"></span>
+                </nav>
+
+                <!-- Category Header -->
+                <div class="category-header">
+                    <h1 id="category-title"></h1>
+                    <p id="category-description"></p>
+                </div>
+
+                <!-- Items Container -->
+                <div id="category-items" class="category-items"></div>
+
+                <!-- Pagination -->
+                <div id="pagination-container" class="pagination-container"></div>
+            </div>
+
+            <!-- Empty State -->
+            <div id="empty-state" class="empty-state" style="display: none;">
+                <h2>No se encontraron resultados</h2>
+                <p>No hay contenido disponible para esta categoría.</p>
+                <a href="index.html" class="btn">Volver al inicio</a>
+            </div>
+
+            <!-- Error State -->
+            <div id="error-state" class="error-state" style="display: none;">
+                <h2>Error al cargar contenido</h2>
+                <p>Ocurrió un error al cargar el contenido. Por favor, inténtalo de nuevo.</p>
+                <button id="retry-button" class="btn">Reintentar</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>PIXEL SAN</h4>
+                    <p>Tu fuente confiable para guías de juegos, tecnología y entretenimiento digital.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Categorías</h4>
+                    <ul>
+                        <li><a href="category.html?category=roblox">Roblox</a></li>
+                        <li><a href="category.html?category=free-fire">Free Fire</a></li>
+                        <li><a href="category.html?category=codigos">Códigos</a></li>
+                        <li><a href="category.html?category=diamantes">Diamantes</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Síguenos</h4>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook">📘</a>
+                        <a href="#" aria-label="Twitter">🐦</a>
+                        <a href="#" aria-label="YouTube">📺</a>
+                        <a href="#" aria-label="Discord">💬</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 PIXEL SAN. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script type="module" src="js/category-page.js"></script>
+</body>
+</html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto - PIXEL SAN</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+    <style>
+        .contact-page {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: var(--bg-primary);
+        }
+        .contact-page h1 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        .contact-info {
+            background: var(--bg-secondary);
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        .contact-form {
+            background: var(--bg-primary);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            font-size: 1rem;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            transition: border-color 0.3s;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(45, 212, 191, 0.1);
+        }
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+        .submit-btn {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s;
+            width: 100%;
+        }
+        .submit-btn:hover {
+            background: var(--primary-dark);
+        }
+        .back-home {
+            display: inline-block;
+            margin-bottom: 2rem;
+            background: var(--primary-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+        .back-home:hover {
+            background: var(--primary-dark);
+        }
+        .contact-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .contact-method {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+        .contact-method h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        .contact-method p {
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+        .contact-method a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .contact-method a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="contact-page">
+        <a href="index.html" class="back-home">← Volver al inicio</a>
+        
+        <h1>Contacto</h1>
+        
+        <div class="contact-info">
+            <h2>¡Nos encanta escuchar de ti!</h2>
+            <p>Si tienes preguntas, sugerencias o simplemente quieres saludar, no dudes en contactarnos.</p>
+        </div>
+
+        <div class="contact-methods">
+            <div class="contact-method">
+                <h3>📧 Email</h3>
+                <p>Respuesta en 24-48 horas</p>
+                <a href="mailto:contacto@pixel-sans.com">contacto@pixel-sans.com</a>
+            </div>
+            
+            <div class="contact-method">
+                <h3>💬 Redes Sociales</h3>
+                <p>Síguenos para las últimas noticias</p>
+                <p>
+                    <a href="#" target="_blank">Facebook</a> | 
+                    <a href="#" target="_blank">Twitter</a> | 
+                    <a href="#" target="_blank">YouTube</a>
+                </p>
+            </div>
+            
+            <div class="contact-method">
+                <h3>⏰ Horario de Atención</h3>
+                <p>Lunes a Viernes</p>
+                <p>9:00 - 18:00 (GMT-5)</p>
+            </div>
+        </div>
+
+        <div class="contact-form">
+            <h2>Formulario de Contacto</h2>
+            <form action="#" method="POST" id="contactForm">
+                <div class="form-group">
+                    <label for="name">Nombre *</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="subject">Asunto *</label>
+                    <select id="subject" name="subject" required>
+                        <option value="">Selecciona un asunto</option>
+                        <option value="general">Consulta general</option>
+                        <option value="roblox">Preguntas sobre Roblox</option>
+                        <option value="free-fire">Preguntas sobre Free Fire</option>
+                        <option value="codigos">Códigos y trucos</option>
+                        <option value="colaboracion">Propuesta de colaboración</option>
+                        <option value="error">Reportar error en el sitio</option>
+                        <option value="otro">Otro</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Mensaje *</label>
+                    <textarea id="message" name="message" placeholder="Cuéntanos en qué podemos ayudarte..." required></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn">Enviar Mensaje</button>
+            </form>
+        </div>
+        
+        <div style="margin-top: 2rem; padding: 1.5rem; background: var(--bg-secondary); border-radius: 10px; text-align: center;">
+            <h3>📍 Información Adicional</h3>
+            <p style="color: var(--text-secondary); margin: 0.5rem 0;">
+                PIXEL SAN es un sitio web dedicado a proporcionar información, guías y contenido 
+                de calidad sobre videojuegos, especialmente Roblox y Free Fire, así como tecnología 
+                y entretenimiento digital.
+            </p>
+            <p style="color: var(--text-secondary); margin: 0;">
+                Nos comprometemos a responder todas las consultas de manera oportuna y profesional.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('¡Gracias por tu mensaje! Te responderemos pronto.\n\nNota: Este es un formulario de demostración. Para un sitio real, necesitarás configurar el backend para procesar los formularios.');
+        });
+    </script>
+</body>
+</html>
