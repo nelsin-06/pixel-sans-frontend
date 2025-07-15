@@ -155,10 +155,9 @@ class Application {
      * @param {Object} post - Post data
      */
     handleCardClick(post) {
-        
-        // You can add modal opening logic here
-        // For now, just show a notification
-        this.managers.notifications.info(`Abriendo: ${post.title}`);
+        console.log(`🖱️ Post card clicked, redirecting to post detail: ${post._id || post.id}`);
+        // Redirect to post detail page
+        window.location.href = `post-detail.html?id=${post._id || post.id}`;
     }
 
     /**

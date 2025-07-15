@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle del Post - PIXEL SAN</title>
+    
+    <!-- Meta description y keywords serán actualizados dinámicamente -->
+    <meta name="description" content="Lee el artículo completo sobre gaming, tecnología y entretenimiento en PIXEL SAN">
+    <meta name="keywords" content="gaming, tecnología, roblox, free fire, códigos, diamantes">
+    
+    <!-- Open Graph meta tags para redes sociales -->
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="PIXEL SAN">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
+    
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/utilities.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Preload de fuentes importantes -->
+    <link rel="preload" href="assets/fonts/main-font.woff2" as="font" type="font/woff2" crossorigin>
+</head>
+<body>
+    <!-- Header con navegación -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <button class="menu-toggle" aria-label="Toggle menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+                
+                <h1 class="site-title">PIXEL SAN</h1>
+                
+                <div class="header-actions">
+                    <button class="search-btn" aria-label="Search">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.35-4.35"></path>
+                        </svg>
+                    </button>
+                    <button class="theme-toggle" aria-label="Toggle theme">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <p class="site-subtitle">Juegos, Tecnología y más</p>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="container">
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">INICIO</a></li>
+                <li><a href="category.html?category=roblox" class="nav-link">ROBLOX</a></li>
+                <li><a href="category.html?category=free-fire" class="nav-link">FREE FIRE</a></li>
+                <li><a href="category.html?category=codigos" class="nav-link">CÓDIGOS</a></li>
+                <li><a href="category.html?category=diamantes" class="nav-link">DIAMANTES</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Breadcrumb navigation -->
+    <div class="breadcrumb-container">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="index.html" class="breadcrumb-link">Inicio</a>
+                <span class="breadcrumb-separator">></span>
+                <a href="#" id="category-breadcrumb" class="breadcrumb-link">Categoría</a>
+                <span class="breadcrumb-separator">></span>
+                <span class="breadcrumb-current" id="post-breadcrumb">Post</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main content -->
+    <main class="main">
+        <!-- Loading state -->
+        <div id="loading-state" class="loading-container">
+            <div class="loading-spinner"></div>
+            <p class="loading-text">Cargando artículo...</p>
+        </div>
+
+        <!-- Error state -->
+        <div id="error-state" class="error-container" style="display: none;">
+            <div class="container">
+                <div class="error-content">
+                    <h2 class="error-title">Error al cargar el artículo</h2>
+                    <p class="error-message">No se pudo cargar el contenido del artículo. Por favor, intenta de nuevo más tarde.</p>
+                    <button class="btn btn-primary" onclick="location.reload()">Intentar de nuevo</button>
+                    <a href="index.html" class="btn btn-secondary">Volver al inicio</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Post content container -->
+        <div id="post-content" class="container" style="display: none;">
+            <!-- Post article will be rendered here dynamically -->
+        </div>
+        
+        <!-- Related posts section -->
+        <section class="related-posts" id="related-posts" style="display: none;">
+            <div class="container">
+                <h2 class="section-title">Artículos relacionados</h2>
+                <div class="related-posts-grid" id="related-posts-container">
+                    <!-- Related posts will be rendered here -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3 class="footer-title">PIXEL SAN</h3>
+                    <p class="footer-text">Tu fuente confiable de información sobre gaming, tecnología y entretenimiento digital.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4 class="footer-subtitle">Enlaces rápidos</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="category.html?category=roblox">Roblox</a></li>
+                        <li><a href="category.html?category=free-fire">Free Fire</a></li>
+                        <li><a href="contacto.html">Contacto</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4 class="footer-subtitle">Legal</h4>
+                    <ul class="footer-links">
+                        <li><a href="politica-privacidad.html">Política de Privacidad</a></li>
+                        <li><a href="terminos-condiciones.html">Términos y Condiciones</a></li>
+                        <li><a href="aviso-legal.html">Aviso Legal</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 PIXEL SAN. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript modules -->
+    <script type="module" src="js/post-detail.js"></script>
+    <script type="module" src="js/modules/theme.js"></script>
+    <script type="module" src="js/modules/navigation.js"></script>
+</body>
+</html>

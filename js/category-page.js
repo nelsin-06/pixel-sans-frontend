@@ -256,7 +256,7 @@ class CategoryPageManager {
             <div class="post-content">
                 <span class="post-category">${this.getCategoryDisplayName(post.category)}</span>
                 <h3 class="post-title">
-                    <a href="#article-${post._id || post.id}">${post.title}</a>
+                    <a href="post-detail.html?id=${post._id || post.id}">${post.title}</a>
                 </h3>
                 <div class="post-meta">
                     <time datetime="${post.createdAt}">${formattedDate}</time>
@@ -266,8 +266,14 @@ class CategoryPageManager {
             </div>
         `;
 
-        // Add click handler
-        card.addEventListener('click', () => this.handleCardClick(post));
+        // Add click handler (but not for links)
+        card.addEventListener('click', (e) => {
+            // Don't handle click if it's on a link
+            if (e.target.tagName === 'A' || e.target.closest('a')) {
+                return;
+            }
+            this.handleCardClick(post);
+        });
 
         return card;
     }
@@ -331,15 +337,9 @@ class CategoryPageManager {
      * @param {Object} post - Post data
      */
     handleCardClick(post) {
-        // Dispatch custom event for card click (maintaining compatibility)
-        const event = new CustomEvent('cardclick', {
-            detail: { 
-                post, 
-                category: this.currentCategory,
-                page: this.currentPage 
-            }
-        });
-        document.dispatchEvent(event);
+        console.log(`🖱️ Card clicked, post ID: ${post._id || post.id}`);
+        // Redirect to post detail page
+        window.location.href = `post-detail.html?id=${post._id || post.id}`;
     }
 
     /**

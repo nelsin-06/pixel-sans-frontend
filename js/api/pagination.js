@@ -243,7 +243,7 @@ class PaginationManager {
             <div class="post-content">
                 <span class="post-category">${this.getCategoryDisplayName(post.category)}</span>
                 <h3 class="post-title">
-                    <a href="#article-${post._id}">${post.title}</a>
+                    <a href="post-detail.html?id=${post._id}">${post.title}</a>
                 </h3>
                 <div class="post-meta">
                     <time datetime="${post.createdAt}">${formattedDate}</time>
@@ -253,8 +253,14 @@ class PaginationManager {
             </div>
         `;
 
-        // Add click handler
-        const cleanup = addEventListener(card, 'click', () => this.handleCardClick(post));
+        // Add click handler (but not for links)
+        const cleanup = addEventListener(card, 'click', (e) => {
+            // Don't handle click if it's on a link
+            if (e.target.tagName === 'A' || e.target.closest('a')) {
+                return;
+            }
+            this.handleCardClick(post);
+        });
         this.cleanupFunctions.push(cleanup);
 
         return card;
@@ -284,7 +290,11 @@ class PaginationManager {
      * @param {Object} post - Post data
      */
     handleCardClick(post) {
-        // Dispatch custom event for card click
+        console.log(`🖱️ Card clicked from pagination, post ID: ${post._id || post.id}`);
+        // Redirect to post detail page
+        window.location.href = `post-detail.html?id=${post._id || post.id}`;
+        
+        // Also dispatch custom event for backward compatibility
         const event = new CustomEvent('cardclick', {
             detail: { post, pagination: this }
         });
