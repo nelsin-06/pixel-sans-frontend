@@ -272,8 +272,7 @@ class PaginationManager {
      * @returns {string} Image URL
      */
     getPostImage(post) {
-        // return post.image || 'https://media.istockphoto.com/id/2175813389/photo/set-of-flaming-torch-isolated-on-white-background.jpg?s=1024x1024&w=is&k=20&c=UDsDucHm39zDcjhDZebZWVx3c2uMpQK2XnYIwJ2BsfM=';
-        return 'https://media.istockphoto.com/id/2175813389/photo/set-of-flaming-torch-isolated-on-white-background.jpg?s=1024x1024&w=is&k=20&c=UDsDucHm39zDcjhDZebZWVx3c2uMpQK2XnYIwJ2BsfM=';
+        return post.image || 'https://media.istockphoto.com/id/2175813389/photo/set-of-flaming-torch-isolated-on-white-background.jpg?s=1024x1024&w=is&k=20&c=UDsDucHm39zDcjhDZebZWVx3c2uMpQK2XnYIwJ2BsfM=';
     }
 
     /**
