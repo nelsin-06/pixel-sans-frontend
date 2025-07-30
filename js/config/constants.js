@@ -6,7 +6,7 @@
 export const APP_CONFIG = {
     // API Configuration
     API: {
-        BASE_URL: 'https://8d217bd41289.ngrok-free.app',
+        BASE_URL: 'https://f9c2fcacbbee.ngrok-free.app',
         ENDPOINTS: {
             POSTS: '/post',
             SEARCH: '/search'
