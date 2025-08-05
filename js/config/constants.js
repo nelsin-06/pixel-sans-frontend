@@ -6,7 +6,7 @@
 export const APP_CONFIG = {
     // API Configuration
     API: {
-        BASE_URL: 'https://878b6b5f702c.ngrok-free.app',
+        BASE_URL: 'https://api.pixel-sans.com',
         ENDPOINTS: {
             POSTS: '/post',
             SEARCH: '/search'
