@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalle del Post - PIXEL SAN</title>
     
-    <!-- Meta description y keywords serán actualizados dinámicamente -->
-    <meta name="description" content="Lee el artículo completo sobre gaming, tecnología y entretenimiento en PIXEL SAN">
-    <meta name="keywords" content="gaming, tecnología, roblox, free fire, códigos, diamantes">
+    <!-- Meta description and keywords will be updated dynamically -->
+    <meta name="description" content="Read the complete article about gaming, technology and entertainment on PIXEL SAN">
+    <meta name="keywords" content="gaming, technology, roblox, free fire, codes, diamonds">
     
     <!-- Open Graph meta tags para redes sociales -->
     <meta property="og:type" content="article">
@@ -29,7 +29,7 @@
     <link rel="preload" href="assets/fonts/main-font.woff2" as="font" type="font/woff2" crossorigin>
 </head>
 <body>
-    <!-- Header con navegación -->
+    <!-- Header with navigation -->
     <header class="header">
         <div class="container">
             <div class="header-content">
@@ -56,7 +56,7 @@
                             <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
                         </svg>
                     </button>
-                    <button class="mobile-menu-toggle" aria-label="Menú" aria-expanded="false">
+                    <button class="mobile-menu-toggle" aria-label="Menu" aria-expanded="false">
                         <span class="hamburger-line"></span>
                         <span class="hamburger-line"></span>
                         <span class="hamburger-line"></span>
@@ -64,7 +64,7 @@
                 </div>
             </div>
             
-            <p class="site-subtitle">Juegos, Tecnología y más</p>
+            <p class="site-subtitle">Games, Technology and more</p>
         </div>
     </header>
 
@@ -72,11 +72,14 @@
     <nav class="main-nav">
         <div class="container">
             <ul class="nav-menu">
-                <li><a href="index.html" class="nav-link">INICIO</a></li>
+                <li><a href="index.html" class="nav-link">HOME</a></li>
+                <li><a href="category.html?category=gems" class="nav-link">GEMS</a></li>
                 <li><a href="category.html?category=roblox" class="nav-link">ROBLOX</a></li>
                 <li><a href="category.html?category=free-fire" class="nav-link">FREE FIRE</a></li>
-                <li><a href="category.html?category=codigos" class="nav-link">CÓDIGOS</a></li>
                 <li><a href="category.html?category=diamantes" class="nav-link">DIAMANTES</a></li>
+                <li><a href="category.html?category=valorant" class="nav-link">VALORANT</a></li>
+                <li><a href="category.html?category=brawl-stars" class="nav-link">BRAWL STARS</a></li>
+                <li><a href="category.html?category=code" class="nav-link">CODE</a></li>
             </ul>
         </div>
     </nav>
@@ -85,11 +88,14 @@
     <div class="mobile-nav-overlay">
         <nav class="mobile-nav">
             <ul class="mobile-nav-list">
-                <li><a href="index.html" class="mobile-nav-link">INICIO</a></li>
+                <li><a href="index.html" class="mobile-nav-link">HOME</a></li>
+                <li><a href="category.html?category=gems" class="mobile-nav-link">GEMS</a></li>
                 <li><a href="category.html?category=roblox" class="mobile-nav-link">ROBLOX</a></li>
                 <li><a href="category.html?category=free-fire" class="mobile-nav-link">FREE FIRE</a></li>
-                <li><a href="category.html?category=codigos" class="mobile-nav-link">CÓDIGOS</a></li>
                 <li><a href="category.html?category=diamantes" class="mobile-nav-link">DIAMANTES</a></li>
+                <li><a href="category.html?category=valorant" class="mobile-nav-link">VALORANT</a></li>
+                <li><a href="category.html?category=brawl-stars" class="mobile-nav-link">BRAWL STARS</a></li>
+                <li><a href="category.html?category=code" class="mobile-nav-link">CODE</a></li>
             </ul>
         </nav>
     </div>
@@ -98,9 +104,9 @@
     <div class="breadcrumb-container">
         <div class="container">
             <div class="breadcrumb">
-                <a href="index.html" class="breadcrumb-link">Inicio</a>
+                <a href="index.html" class="breadcrumb-link">Home</a>
                 <span class="breadcrumb-separator">></span>
-                <a href="#" id="category-breadcrumb" class="breadcrumb-link">Categoría</a>
+                <a href="#" id="category-breadcrumb" class="breadcrumb-link">Category</a>
                 <span class="breadcrumb-separator">></span>
                 <span class="breadcrumb-current" id="post-breadcrumb">Post</span>
             </div>
@@ -112,17 +118,17 @@
         <!-- Loading state -->
         <div id="loading-state" class="loading-container">
             <div class="loading-spinner"></div>
-            <p class="loading-text">Cargando artículo...</p>
+            <p class="loading-text">Loading article...</p>
         </div>
 
         <!-- Error state -->
         <div id="error-state" class="error-container" style="display: none;">
             <div class="container">
                 <div class="error-content">
-                    <h2 class="error-title">Error al cargar el artículo</h2>
-                    <p class="error-message">No se pudo cargar el contenido del artículo. Por favor, intenta de nuevo más tarde.</p>
-                    <button class="btn btn-primary" onclick="location.reload()">Intentar de nuevo</button>
-                    <a href="index.html" class="btn btn-secondary">Volver al inicio</a>
+                    <h2 class="error-title">Error loading article</h2>
+                    <p class="error-message">Could not load article content. Please try again later.</p>
+                    <button class="btn btn-primary" onclick="location.reload()">Try again</button>
+                    <a href="index.html" class="btn btn-secondary">Back to home</a>
                 </div>
             </div>
         </div>
@@ -156,8 +162,12 @@
                     <h4 class="footer-subtitle">Enlaces rápidos</h4>
                     <ul class="footer-links">
                         <li><a href="index.html">Inicio</a></li>
+                        <li><a href="category.html?category=gems">Gems</a></li>
                         <li><a href="category.html?category=roblox">Roblox</a></li>
                         <li><a href="category.html?category=free-fire">Free Fire</a></li>
+                        <li><a href="category.html?category=valorant">Valorant</a></li>
+                        <li><a href="category.html?category=brawl-stars">Brawl Stars</a></li>
+                        <li><a href="category.html?category=code">Code</a></li>
                         <li><a href="contacto.html">Contacto</a></li>
                     </ul>
                 </div>
@@ -183,5 +193,6 @@
     <script type="module" src="js/mobile-menu.js"></script>
     <script type="module" src="js/modules/theme.js"></script>
     <script type="module" src="js/modules/navigation.js"></script>
+    <script type="module" src="js/modules/accessibility.js"></script>
 </body>
 </html>

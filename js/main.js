@@ -61,6 +61,9 @@ class Application {
             // Dispatch application ready event
             this.dispatchReadyEvent();
 
+            // Show page loaded notification
+            notificationManager.success(APP_CONFIG.MESSAGES.PAGE_LOADED_SUCCESS);
+
         } catch (error) {
             console.error('❌ Failed to initialize application:', error);
             this.handleInitializationError(error);

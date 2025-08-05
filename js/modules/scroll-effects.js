@@ -8,12 +8,9 @@ import { throttle } from '../utils/helpers.js';
 
 class ScrollEffectsManager {
     constructor() {
-        this.scrollToTopBtn = null;
         this.observer = null;
-        this.scrollProgress = null;
         
         this.config = {
-            showScrollTopAt: 300,
             animationThreshold: 0.1,
             animationRootMargin: '0px 0px -50px 0px'
         };
@@ -22,40 +19,9 @@ class ScrollEffectsManager {
     }
 
     init() {
-        this.createScrollToTopButton();
-        this.createScrollProgress();
         this.initializeIntersectionObserver();
         this.bindScrollEvents();
         this.addScrollStyles();
-    }
-
-    createScrollToTopButton() {
-        this.scrollToTopBtn = document.createElement('button');
-        this.scrollToTopBtn.className = 'scroll-to-top';
-        this.scrollToTopBtn.innerHTML = `
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="18 15 12 9 6 15"></polyline>
-            </svg>
-        `;
-        this.scrollToTopBtn.setAttribute('aria-label', 'Scroll to top');
-        this.scrollToTopBtn.setAttribute('title', 'Volver arriba');
-        
-        document.body.appendChild(this.scrollToTopBtn);
-
-        this.scrollToTopBtn.addEventListener('click', () => {
-            this.scrollToTop();
-        });
-    }
-
-    createScrollProgress() {
-        this.scrollProgress = document.createElement('div');
-        this.scrollProgress.className = 'scroll-progress';
-        
-        const progressBar = document.createElement('div');
-        progressBar.className = 'scroll-progress-bar';
-        this.scrollProgress.appendChild(progressBar);
-        
-        document.body.appendChild(this.scrollProgress);
     }
 
     initializeIntersectionObserver() {
@@ -144,34 +110,9 @@ class ScrollEffectsManager {
 
     handleScroll() {
         const scrollY = window.scrollY;
-        const windowHeight = window.innerHeight;
-        const documentHeight = document.documentElement.scrollHeight;
-        
-        // Show/hide scroll to top button
-        this.toggleScrollToTopButton(scrollY);
-        
-        // Update scroll progress
-        this.updateScrollProgress(scrollY, documentHeight, windowHeight);
         
         // Parallax effects
         this.handleParallaxEffects(scrollY);
-    }
-
-    toggleScrollToTopButton(scrollY) {
-        if (scrollY > this.config.showScrollTopAt) {
-            this.scrollToTopBtn.classList.add('visible');
-        } else {
-            this.scrollToTopBtn.classList.remove('visible');
-        }
-    }
-
-    updateScrollProgress(scrollY, documentHeight, windowHeight) {
-        const scrollProgress = (scrollY / (documentHeight - windowHeight)) * 100;
-        const progressBar = this.scrollProgress.querySelector('.scroll-progress-bar');
-        
-        if (progressBar) {
-            progressBar.style.width = `${Math.min(scrollProgress, 100)}%`;
-        }
     }
 
     handleParallaxEffects(scrollY) {
@@ -182,28 +123,6 @@ class ScrollEffectsManager {
             const yPos = -(scrollY * speed);
             element.style.transform = `translateY(${yPos}px)`;
         });
-    }
-
-    scrollToTop() {
-        const startPosition = window.scrollY;
-        const duration = Math.min(startPosition / 3, 1000); // Max 1 second
-        const startTime = performance.now();
-
-        const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
-
-        const animateScroll = (currentTime) => {
-            const elapsed = currentTime - startTime;
-            const progress = Math.min(elapsed / duration, 1);
-            const easeProgress = easeOutCubic(progress);
-            
-            window.scrollTo(0, startPosition * (1 - easeProgress));
-            
-            if (progress < 1) {
-                requestAnimationFrame(animateScroll);
-            }
-        };
-
-        requestAnimationFrame(animateScroll);
     }
 
     // Smooth scroll to element
@@ -229,62 +148,6 @@ class ScrollEffectsManager {
 
     addScrollStyles() {
         const styles = `
-            .scroll-to-top {
-                position: fixed;
-                bottom: 2rem;
-                right: 2rem;
-                background: var(--primary-color);
-                color: white;
-                border: none;
-                width: 3rem;
-                height: 3rem;
-                border-radius: 50%;
-                cursor: pointer;
-                opacity: 0;
-                visibility: hidden;
-                transform: translateY(100%);
-                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-                z-index: 100;
-                box-shadow: var(--shadow-lg);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-            
-            .scroll-to-top.visible {
-                opacity: 1;
-                visibility: visible;
-                transform: translateY(0);
-            }
-            
-            .scroll-to-top:hover {
-                background: var(--primary-dark);
-                transform: translateY(-4px) scale(1.1);
-                box-shadow: var(--shadow-xl);
-            }
-            
-            .scroll-to-top:active {
-                transform: translateY(-2px) scale(1.05);
-            }
-            
-            .scroll-progress {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 3px;
-                background: rgba(255, 255, 255, 0.1);
-                z-index: 1000;
-                backdrop-filter: blur(10px);
-            }
-            
-            .scroll-progress-bar {
-                height: 100%;
-                background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
-                transition: width 0.1s ease-out;
-                border-radius: 0 2px 2px 0;
-            }
-            
             /* Scroll animations */
             .scroll-animate {
                 transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
@@ -343,15 +206,6 @@ class ScrollEffectsManager {
                 will-change: transform;
             }
             
-            /* Hide elements during scroll */
-            .scrolling-down .scroll-to-top {
-                transform: translateY(100%) scale(0.8);
-            }
-            
-            .scrolling-up .scroll-to-top.visible {
-                transform: translateY(0) scale(1);
-            }
-            
             /* Smooth scrolling for the entire page */
             html {
                 scroll-behavior: smooth;
@@ -363,7 +217,6 @@ class ScrollEffectsManager {
                 }
                 
                 .scroll-animate,
-                .scroll-to-top,
                 [data-parallax] {
                     transition: none !important;
                     animation: none !important;
@@ -388,14 +241,6 @@ class ScrollEffectsManager {
     destroy() {
         if (this.observer) {
             this.observer.disconnect();
-        }
-        
-        if (this.scrollToTopBtn) {
-            this.scrollToTopBtn.remove();
-        }
-        
-        if (this.scrollProgress) {
-            this.scrollProgress.remove();
         }
     }
 }

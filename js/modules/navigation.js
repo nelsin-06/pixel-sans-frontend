@@ -95,8 +95,22 @@ export class NavigationManager {
      * @param {string} category - Category identifier
      */
     navigateToCategory(category) {
+        // Map hash category names to proper category page names
+        const categoryMap = {
+            'inicio': 'home',
+            'roblox': 'roblox',
+            'free-fire': 'free-fire',
+            'codigos': 'codigos',
+            'diamantes': 'diamantes',
+            'gems': 'gems',
+            'valorant': 'valorant',
+            'brawl-stars': 'brawl-stars'
+        };
+        
+        const mappedCategory = categoryMap[category] || category;
+        
         // Build the URL for the category page
-        const categoryUrl = `category.html?category=${category}`;
+        const categoryUrl = `category.html?category=${mappedCategory}`;
         
         // Navigate to the category page
         window.location.href = categoryUrl;

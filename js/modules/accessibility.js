@@ -148,9 +148,9 @@ class AccessibilityManager {
         const skipLinksContainer = document.createElement('div');
         skipLinksContainer.className = 'skip-links';
         skipLinksContainer.innerHTML = `
-            <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
-            <a href="#main-nav" class="skip-link">Saltar a la navegación</a>
-            <a href="#footer" class="skip-link">Saltar al pie de página</a>
+            <a href="#main-content" class="skip-link">Skip to main content</a>
+            <a href="#main-nav" class="skip-link">Skip to navigation</a>
+            <a href="#footer" class="skip-link">Skip to footer</a>
         `;
         
         document.body.insertBefore(skipLinksContainer, document.body.firstChild);
@@ -499,7 +499,6 @@ class AccessibilityManager {
             /* Print accessibility */
             @media print {
                 .skip-links,
-                .scroll-to-top,
                 .search-modal,
                 .article-modal {
                     display: none !important;

@@ -1,0 +1,212 @@
+/* Loading and Notification Styles */
+
+/* Loading Spinner Styles */
+.loading-spinner, .spinner {
+    width: 32px;
+    height: 32px;
+    border: 3px solid var(--border-color, #e2e8f0);
+    border-top: 3px solid var(--primary-color, #667eea);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 1rem auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Search Loading Styles */
+.search-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    color: var(--text-secondary, #64748b);
+}
+
+.search-loading p {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+/* Search Error Styles */
+.search-error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    color: var(--error-color, #ef4444);
+    text-align: center;
+}
+
+.search-error p {
+    margin: 0 0 0.5rem 0;
+    font-weight: 500;
+}
+
+.search-error small {
+    color: var(--text-secondary, #64748b);
+}
+
+/* Search No Results Styles */
+.search-no-results {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    color: var(--text-secondary, #64748b);
+    text-align: center;
+}
+
+.search-no-results p {
+    margin: 0 0 0.5rem 0;
+    font-weight: 500;
+    color: var(--text-primary, #1e293b);
+}
+
+.search-no-results small {
+    font-size: 0.8rem;
+}
+
+/* Page Loading State */
+.loading-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+    text-align: center;
+}
+
+.loading-state p {
+    margin: 0;
+    color: var(--text-secondary, #64748b);
+    font-size: 1rem;
+}
+
+/* Notification Styles Enhancement */
+.notification-container {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 9999;
+    max-width: 400px;
+    pointer-events: none;
+}
+
+.notification {
+    background: var(--bg-primary, #ffffff);
+    border: 1px solid var(--border-color, #e2e8f0);
+    border-radius: var(--border-radius, 8px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    margin-bottom: 0.5rem;
+    padding: 1rem;
+    pointer-events: auto;
+    transform: translateX(100%);
+    transition: all 0.3s ease-in-out;
+    opacity: 0;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.notification.show {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.notification-success {
+    border-left: 4px solid var(--success-color, #10b981);
+}
+
+.notification-error {
+    border-left: 4px solid var(--error-color, #ef4444);
+}
+
+.notification-warning {
+    border-left: 4px solid var(--warning-color, #f59e0b);
+}
+
+.notification-info {
+    border-left: 4px solid var(--info-color, #3b82f6);
+}
+
+.notification-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+}
+
+.notification-icon {
+    font-size: 1.25rem;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.notification-message {
+    flex: 1;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    color: var(--text-primary, #1e293b);
+}
+
+.notification-close {
+    background: none;
+    border: none;
+    font-size: 1.25rem;
+    color: var(--text-secondary, #64748b);
+    cursor: pointer;
+    padding: 0;
+    margin-left: auto;
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.notification-close:hover {
+    background-color: var(--bg-secondary, #f8fafc);
+    color: var(--text-primary, #1e293b);
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+    .notification-container {
+        left: 1rem;
+        right: 1rem;
+        max-width: none;
+    }
+    
+    .notification {
+        transform: translateY(-100%);
+    }
+    
+    .notification.show {
+        transform: translateY(0);
+    }
+}
+
+/* Dark Theme Support */
+@media (prefers-color-scheme: dark) {
+    .notification {
+        background: var(--bg-primary-dark, #1e293b);
+        border-color: var(--border-color-dark, #334155);
+    }
+    
+    .notification-message {
+        color: var(--text-primary-dark, #f1f5f9);
+    }
+    
+    .notification-close {
+        color: var(--text-secondary-dark, #94a3b8);
+    }
+    
+    .notification-close:hover {
+        background-color: var(--bg-secondary-dark, #334155);
+        color: var(--text-primary-dark, #f1f5f9);
+    }
+}

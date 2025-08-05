@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="PIXEL SAN - Juegos, Tecnología y más. Guías de Roblox, códigos y consejos gaming.">
-    <meta name="keywords" content="Roblox, juegos, gaming, tecnología, robux, códigos, Free Fire">
-    <title>PIXEL SAN - Juegos, Tecnología y más</title>
+    <meta name="description" content="PIXEL SAN - Games, Technology and more. Roblox guides, codes and gaming tips.">
+    <meta name="keywords" content="Roblox, games, gaming, technology, robux, codes, Free Fire">
+    <title>PIXEL SAN - Games, Technology and more</title>
     <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/loading-notifications.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -43,26 +44,27 @@
                             <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
                         </svg>
                     </button>
-                    <button class="mobile-menu-toggle" aria-label="Menú" aria-expanded="false">
+                    <button class="mobile-menu-toggle" aria-label="Menu" aria-expanded="false">
                         <span class="hamburger-line"></span>
                         <span class="hamburger-line"></span>
                         <span class="hamburger-line"></span>
                     </button>
                 </div>
             </div>
-            
-            <p class="site-subtitle">Juegos, Tecnología y más</p>
         </div>
     </header>
 
     <nav class="main-nav">
         <div class="container">
             <ul class="nav-menu">
-                <li><a href="#inicio" class="nav-link active">INICIO</a></li>
-                <li><a href="#roblox" class="nav-link">ROBLOX</a></li>
-                <li><a href="#free-fire" class="nav-link">FREE FIRE</a></li>
-                <li><a href="#codigos" class="nav-link">CÓDIGOS</a></li>
-                <li><a href="#diamantes" class="nav-link">DIAMANTES</a></li>
+                <li><a href="index.html" class="nav-link active">HOME</a></li>
+                <li><a href="category.html?category=gems" class="nav-link">GEMS</a></li>
+                <li><a href="category.html?category=roblox" class="nav-link">ROBLOX</a></li>
+                <li><a href="category.html?category=free-fire" class="nav-link">FREE FIRE</a></li>
+                <li><a href="category.html?category=diamantes" class="nav-link">DIAMONDS</a></li>
+                <li><a href="category.html?category=valorant" class="nav-link">VALORANT</a></li>
+                <li><a href="category.html?category=brawl-stars" class="nav-link">BRAWL STARS</a></li>
+                <li><a href="category.html?category=code" class="nav-link">CODE</a></li>
             </ul>
         </div>
     </nav>
@@ -71,11 +73,14 @@
     <div class="mobile-nav-overlay">
         <nav class="mobile-nav">
             <ul class="mobile-nav-list">
-                <li><a href="#inicio" class="mobile-nav-link">INICIO</a></li>
-                <li><a href="#roblox" class="mobile-nav-link">ROBLOX</a></li>
-                <li><a href="#free-fire" class="mobile-nav-link">FREE FIRE</a></li>
-                <li><a href="#codigos" class="mobile-nav-link">CÓDIGOS</a></li>
-                <li><a href="#diamantes" class="mobile-nav-link">DIAMANTES</a></li>
+                <li><a href="index.html" class="mobile-nav-link">HOME</a></li>
+                <li><a href="category.html?category=gems" class="mobile-nav-link">GEMS</a></li>
+                <li><a href="category.html?category=roblox" class="mobile-nav-link">ROBLOX</a></li>
+                <li><a href="category.html?category=free-fire" class="mobile-nav-link">FREE FIRE</a></li>
+                <li><a href="category.html?category=diamantes" class="mobile-nav-link">DIAMONDS</a></li>
+                <li><a href="category.html?category=valorant" class="mobile-nav-link">VALORANT</a></li>
+                <li><a href="category.html?category=brawl-stars" class="mobile-nav-link">BRAWL STARS</a></li>
+                <li><a href="category.html?category=code" class="mobile-nav-link">CODE</a></li>
             </ul>
         </nav>
     </div>
@@ -83,76 +88,29 @@
     <main class="main-content">
         <div class="container">
             <section class="announcements">
-                <h2 class="section-title">Anuncios</h2>
+                <h2 class="section-title">Latest Posts</h2>
                 
-                <article class="post-card featured">
-                    <div class="post-image">
-                        <div class="robux-selector">
-                            <h3>Selecciona Tu Robux</h3>
-                            <div class="robux-options">
-                                <label class="robux-option">
-                                    <input type="radio" name="robux" value="400">
-                                    <span>400 ROBUX</span>
-                                </label>
-                                <label class="robux-option">
-                                    <input type="radio" name="robux" value="800">
-                                    <span>800 ROBUX</span>
-                                </label>
-                                <label class="robux-option">
-                                    <input type="radio" name="robux" value="2000">
-                                    <span>2,000 ROBUX</span>
-                                </label>
-                                <label class="robux-option">
-                                    <input type="radio" name="robux" value="4500">
-                                    <span>4,500 ROBUX</span>
-                                </label>
-                                <label class="robux-option">
-                                    <input type="radio" name="robux" value="10000">
-                                    <span>10,000 ROBUX</span>
-                                </label>
-                                <label class="robux-option">
-                                    <input type="radio" name="robux" value="22500">
-                                    <span>22,500 ROBUX</span>
-                                </label>
-                            </div>
-                            <button class="robux-btn">Robux Gratis!</button>
-                        </div>
-                    </div>
-                    
-                    <div class="post-content">
-                        <span class="post-category">Roblox</span>
-                        <h3 class="post-title">
-                            <a href="#article-1">Guía Definitiva: ¿Qué son los Robux y Cómo se Utilizan en Roblox?</a>
-                        </h3>
-                        <div class="post-meta">
-                            <time datetime="2024-12-26">26/12/2024</time>
-                            <span class="comments">Sin comentarios</span>
-                        </div>
-                        <p class="post-excerpt">
-                            ¿Qué son los Robux en Roblox? Los Robux son la moneda virtual oficial utilizada en la plataforma de juegos Roblox. Similar a cómo funcionan las monedas o puntos en otros...
-                        </p>
-                    </div>
-                </article>
-
-                <article class="post-card">
-                    <div class="post-image">
-                        <img src="https://via.placeholder.com/400x250?text=Roblox+Methods" alt="Métodos para ganar Robux" loading="lazy">
-                    </div>
-                    
-                    <div class="post-content">
-                        <span class="post-category">Roblox</span>
-                        <h3 class="post-title">
-                            <a href="#article-2">Métodos Infalibles para Ganar Más Robux</a>
-                        </h3>
-                        <div class="post-meta">
-                            <time datetime="2024-12-25">25/12/2024</time>
-                            <span class="comments">3 comentarios</span>
-                        </div>
-                        <p class="post-excerpt">
-                            Descubre los mejores métodos legítimos para obtener Robux en Roblox. Desde programas de afiliados hasta creación de contenido...
-                        </p>
-                    </div>
-                </article>
+                <!-- Loading state -->
+                <div id="loading-state" class="loading-state">
+                    <div class="spinner"></div>
+                    <p>Loading posts...</p>
+                </div>
+                
+                <!-- Error state -->
+                <div id="error-state" class="error-state" style="display: none;">
+                    <p>Error loading posts. Please try again later.</p>
+                    <button id="retry-btn" class="btn">Retry</button>
+                </div>
+                
+                <!-- Posts container -->
+                <div id="posts-container" class="posts-grid">
+                    <!-- Posts will be loaded here dynamically -->
+                </div>
+                
+                <!-- Pagination -->
+                <div id="pagination-container" class="pagination-container" style="display: none;">
+                    <!-- Pagination will be generated here -->
+                </div>
             </section>
         </div>
     </main>
@@ -162,21 +120,24 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <h4>PIXEL SAN</h4>
-                    <p>Tu fuente confiable para guías de juegos, tecnología y entretenimiento digital.</p>
+                    <p>Your trusted source for game guides, technology and digital entertainment.</p>
                 </div>
                 
                 <div class="footer-section">
-                    <h4>Categorías</h4>
+                    <h4>Categories</h4>
                     <ul>
-                        <li><a href="#roblox">Roblox</a></li>
-                        <li><a href="#free-fire">Free Fire</a></li>
-                        <li><a href="#tecnologia">Tecnología</a></li>
-                        <li><a href="#codigos">Códigos</a></li>
+                        <li><a href="category.html?category=gems">Gems</a></li>
+                        <li><a href="category.html?category=roblox">Roblox</a></li>
+                        <li><a href="category.html?category=free-fire">Free Fire</a></li>
+                        <li><a href="category.html?category=valorant">Valorant</a></li>
+                        <li><a href="category.html?category=brawl-stars">Brawl Stars</a></li>
+                        <li><a href="category.html?category=diamantes">Diamonds</a></li>
+                        <li><a href="category.html?category=code">Code</a></li>
                     </ul>
                 </div>
                 
                 <div class="footer-section">
-                    <h4>Síguenos</h4>
+                    <h4>Follow Us</h4>
                     <div class="social-links">
                         <a href="#" aria-label="Facebook">📘</a>
                         <a href="#" aria-label="Twitter">🐦</a>
@@ -187,18 +148,18 @@
             </div>
             
             <div class="footer-bottom">
-                <p>&copy; 2024 PIXEL SAN. Todos los derechos reservados.</p>
+                <p>&copy; 2024 PIXEL SAN. All rights reserved.</p>
                 <div class="footer-legal-links">
-                    <a href="politica-privacidad.html" class="footer-link" target="_blank">Política de Privacidad</a>
-                    <a href="aviso-legal.html" class="footer-link" target="_blank">Aviso Legal</a>
-                    <a href="terminos-condiciones.html" class="footer-link" target="_blank">Términos y Condiciones</a>
-                    <a href="contacto.html" class="footer-link">Contacto</a>
+                    <a href="politica-privacidad.html" class="footer-link" target="_blank">Privacy Policy</a>
+                    <a href="aviso-legal.html" class="footer-link" target="_blank">Legal Notice</a>
+                    <a href="terminos-condiciones.html" class="footer-link" target="_blank">Terms and Conditions</a>
+                    <a href="contacto.html" class="footer-link">Contact</a>
                 </div>
             </div>
         </div>
     </footer>
 
-    <script type="module" src="./js/demo/mock-api.js"></script>
+    <script type="module" src="./js/home-page.js"></script>
     <script type="module" src="./js/main.js"></script>
     <script type="module" src="./js/mobile-menu.js"></script>
 </body>

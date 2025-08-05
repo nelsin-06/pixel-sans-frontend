@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Categoría - PIXEL SAN</title>
+    <title>Category - PIXEL SAN</title>
     <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/loading-notifications.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -35,15 +36,13 @@
                             <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
                         </svg>
                     </button>
-                    <button class="mobile-menu-toggle" aria-label="Menú" aria-expanded="false">
+                    <button class="mobile-menu-toggle" aria-label="Menu" aria-expanded="false">
                         <span class="hamburger-line"></span>
                         <span class="hamburger-line"></span>
                         <span class="hamburger-line"></span>
                     </button>
                 </div>
             </div>
-            
-            <p class="site-subtitle">Juegos, Tecnología y más</p>
         </div>
     </header>
 
@@ -51,11 +50,14 @@
     <nav class="main-nav">
         <div class="container">
             <ul class="nav-menu">
-                <li><a href="index.html" class="nav-link">INICIO</a></li>
+                <li><a href="index.html" class="nav-link">HOME</a></li>
+                <li><a href="category.html?category=gems" class="nav-link">GEMS</a></li>
                 <li><a href="category.html?category=roblox" class="nav-link">ROBLOX</a></li>
                 <li><a href="category.html?category=free-fire" class="nav-link">FREE FIRE</a></li>
-                <li><a href="category.html?category=codigos" class="nav-link">CÓDIGOS</a></li>
-                <li><a href="category.html?category=diamantes" class="nav-link">DIAMANTES</a></li>
+                <li><a href="category.html?category=diamantes" class="nav-link">DIAMONDS</a></li>
+                <li><a href="category.html?category=valorant" class="nav-link">VALORANT</a></li>
+                <li><a href="category.html?category=brawl-stars" class="nav-link">BRAWL STARS</a></li>
+                <li><a href="category.html?category=code" class="nav-link">CODE</a></li>
             </ul>
         </div>
     </nav>
@@ -64,11 +66,14 @@
     <div class="mobile-nav-overlay">
         <nav class="mobile-nav">
             <ul class="mobile-nav-list">
-                <li><a href="index.html" class="mobile-nav-link">INICIO</a></li>
+                <li><a href="index.html" class="mobile-nav-link">HOME</a></li>
+                <li><a href="category.html?category=gems" class="mobile-nav-link">GEMS</a></li>
                 <li><a href="category.html?category=roblox" class="mobile-nav-link">ROBLOX</a></li>
                 <li><a href="category.html?category=free-fire" class="mobile-nav-link">FREE FIRE</a></li>
-                <li><a href="category.html?category=codigos" class="mobile-nav-link">CÓDIGOS</a></li>
-                <li><a href="category.html?category=diamantes" class="mobile-nav-link">DIAMANTES</a></li>
+                <li><a href="category.html?category=diamantes" class="mobile-nav-link">DIAMONDS</a></li>
+                <li><a href="category.html?category=valorant" class="mobile-nav-link">VALORANT</a></li>
+                <li><a href="category.html?category=brawl-stars" class="mobile-nav-link">BRAWL STARS</a></li>
+                <li><a href="category.html?category=code" class="mobile-nav-link">CODE</a></li>
             </ul>
         </nav>
     </div>
@@ -79,14 +84,14 @@
             <!-- Loading State -->
             <div id="loading-state" class="loading-state">
                 <div class="spinner"></div>
-                <p>Cargando contenido...</p>
+                <p>Loading content...</p>
             </div>
 
             <!-- Category Content -->
             <div id="category-content" class="category-content" style="display: none;">
                 <!-- Breadcrumb -->
                 <nav class="breadcrumb">
-                    <a href="index.html">Inicio</a>
+                    <a href="index.html">Home</a>
                     <span>/</span>
                     <span id="category-breadcrumb"></span>
                 </nav>
@@ -107,15 +112,15 @@
             <!-- Empty State -->
             <div id="empty-state" class="empty-state" style="display: none;">
                 <h2>No se encontraron resultados</h2>
-                <p>No hay contenido disponible para esta categoría.</p>
-                <a href="index.html" class="btn">Volver al inicio</a>
+                <p>No content available for this category.</p>
+                <a href="index.html" class="btn">Go to Home</a>
             </div>
 
             <!-- Error State -->
             <div id="error-state" class="error-state" style="display: none;">
-                <h2>Error al cargar contenido</h2>
-                <p>Ocurrió un error al cargar el contenido. Por favor, inténtalo de nuevo.</p>
-                <button id="retry-button" class="btn">Reintentar</button>
+                <h2>Error loading content</h2>
+                <p>An error occurred while loading content. Please try again.</p>
+                <button id="retry-button" class="btn">Retry</button>
             </div>
         </div>
     </main>
@@ -126,21 +131,25 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <h4>PIXEL SAN</h4>
-                    <p>Tu fuente confiable para guías de juegos, tecnología y entretenimiento digital.</p>
+                    <p>Your trusted source for gaming guides, technology and digital entertainment.</p>
                 </div>
                 
                 <div class="footer-section">
-                    <h4>Categorías</h4>
+                    <h4>Categories</h4>
                     <ul>
+                        <li><a href="category.html?category=gems">Gems</a></li>
                         <li><a href="category.html?category=roblox">Roblox</a></li>
                         <li><a href="category.html?category=free-fire">Free Fire</a></li>
-                        <li><a href="category.html?category=codigos">Códigos</a></li>
+                        <li><a href="category.html?category=valorant">Valorant</a></li>
+                        <li><a href="category.html?category=brawl-stars">Brawl Stars</a></li>
+                        <li><a href="category.html?category=code">Codes</a></li>
                         <li><a href="category.html?category=diamantes">Diamantes</a></li>
+                        <li><a href="category.html?category=code">Code</a></li>
                     </ul>
                 </div>
                 
                 <div class="footer-section">
-                    <h4>Síguenos</h4>
+                    <h4>Follow us</h4>
                     <div class="social-links">
                         <a href="#" aria-label="Facebook">📘</a>
                         <a href="#" aria-label="Twitter">🐦</a>

@@ -5,6 +5,7 @@
 
 import { $, $$ } from '../utils/dom-helpers.js';
 import { debounce } from '../utils/helpers.js';
+import { APP_CONFIG } from '../config/constants.js';
 import notificationManager from './notifications.js';
 
 class SearchManager {
@@ -73,8 +74,8 @@ class SearchManager {
         this.searchModal.className = 'search-modal';
         this.searchModal.innerHTML = `
             <div class="search-container">
-                <input type="text" placeholder="Buscar artículos..." class="search-input" autofocus>
-                <button class="search-close" aria-label="Cerrar búsqueda">&times;</button>
+                <input type="text" placeholder="Search articles..." class="search-input" autofocus>
+                <button class="search-close" aria-label="Close search">&times;</button>
             </div>
             <div class="search-results"></div>
         `;
@@ -127,70 +128,249 @@ class SearchManager {
     }
 
     async performSearch(query) {
-        // Mock search for now - replace with actual API call
+        try {
+            // Use constants for dynamic URL construction
+            const searchParams = new URLSearchParams({
+                page: '1',
+                pageSize: '3', // Keep the backend pageSize but limit frontend display
+                title: query // Note: Using "title" as specified in the requirement
+            });
+            
+            // Construct URL using constants
+            const searchUrl = `${APP_CONFIG.API.BASE_URL}${APP_CONFIG.API.ENDPOINTS.POSTS}?${searchParams}`;
+            
+            const response = await fetch(searchUrl);
+            
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+            
+            const data = await response.json();
+            
+            // Normalize the response to expected format
+            const results = this.normalizeSearchResults(data, query);
+            
+            // Limit results to first 3 items as requested
+            return results.slice(0, 3);
+            
+        } catch (error) {
+            console.error('Search API error:', error);
+            
+            // Show error notification
+            notificationManager.error('Search error occurred. Please try again.');
+            
+            // Fallback to mock results (also limited to 3)
+            const mockResults = await this.getMockResults(query);
+            return mockResults.slice(0, 3);
+        }
+    }
+
+    normalizeSearchResults(data, query) {
+        // Handle the actual API response structure
+        let posts = [];
+        
+        if (data.success && data.data && data.data.items && Array.isArray(data.data.items)) {
+            posts = data.data.items;
+        } else if (Array.isArray(data)) {
+            posts = data;
+        } else if (data.posts && Array.isArray(data.posts)) {
+            posts = data.posts;
+        } else if (data.data && Array.isArray(data.data)) {
+            posts = data.data;
+        } else if (data.items && Array.isArray(data.items)) {
+            posts = data.items;
+        }
+        
+        // Transform API posts to search result format
+        return posts.map(post => {
+            // Create excerpt from the first section if available
+            let excerpt = '';
+            if (post.secciones && Array.isArray(post.secciones) && post.secciones.length > 0) {
+                // Use summary section if available, otherwise first section
+                const summarySection = post.secciones.find(section => 
+                    section.titulo && section.titulo.toLowerCase() === 'summary'
+                );
+                excerpt = summarySection ? 
+                    summarySection.contenido.substring(0, 150) + '...' :
+                    post.secciones[0].contenido.substring(0, 150) + '...';
+            }
+            
+            return {
+                id: post._id,
+                title: post.title || 'Untitled',
+                url: `post-detail.html?id=${post._id}`, // Navigate to detail page with post ID
+                category: this.formatCategory(post.category || 'General'),
+                excerpt: excerpt,
+                image: post.image || '',
+                youtubeChannelName: post.youtubeChannelName || ''
+            };
+        });
+    }
+
+    formatCategory(categoryString) {
+        // Handle comma-separated categories from API
+        if (!categoryString) return 'General';
+        
+        const categories = categoryString.split(',').map(cat => cat.trim());
+        // Return the first category, properly formatted
+        const firstCategory = categories[0];
+        
+        // Capitalize first letter of each word
+        return firstCategory.split(' ')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+            .join(' ');
+    }
+
+    /**
+     * Convert category code to English name for API requests
+     * @param {string} categoryCode - Internal category code
+     * @returns {string} English category name for API
+     */
+    convertCategoryToEnglish(categoryCode) {
+        if (!categoryCode) return categoryCode;
+        
+        // Use the mapping from constants
+        return APP_CONFIG.CATEGORY_TO_ENGLISH?.[categoryCode] || categoryCode;
+    }
+
+    getMockResults(query) {
+        // Mock search results as fallback
         const mockResults = [
             { 
-                title: 'Guía Definitiva: ¿Qué son los Robux y Cómo se Utilizan en Roblox?', 
+                title: 'Definitive Guide: What are Robux and How are they Used in Roblox?', 
                 url: '#article-1',
                 category: 'Roblox',
-                excerpt: 'Los Robux son la moneda virtual oficial utilizada en la plataforma de juegos Roblox...'
+                excerpt: 'Robux are the official virtual currency used on the Roblox gaming platform...'
             },
             { 
-                title: 'Métodos Infalibles para Ganar Más Robux', 
+                title: 'Foolproof Methods to Earn More Robux', 
                 url: '#article-2',
                 category: 'Roblox',
-                excerpt: 'Descubre los mejores métodos legítimos para obtener Robux en Roblox...'
+                excerpt: 'Discover the best legitimate methods to get Robux in Roblox...'
             },
             { 
-                title: 'Códigos de Free Fire Actualizados Enero 2025', 
+                title: 'Updated Free Fire Codes January 2025', 
                 url: '#article-3',
                 category: 'Free Fire',
-                excerpt: 'Los códigos más recientes para Free Fire que te permitirán obtener diamantes...'
+                excerpt: 'The latest codes for Free Fire that will let you get diamonds...'
             },
             { 
-                title: 'Guía Completa de Diamantes en Free Fire', 
+                title: 'Complete Diamonds Guide in Free Fire', 
                 url: '#article-4',
                 category: 'Free Fire',
-                excerpt: 'Todo lo que necesitas saber sobre los diamantes en Free Fire...'
+                excerpt: 'Everything you need to know about diamonds in Free Fire...'
+            },
+            { 
+                title: 'Valorant Pro Tips and Tricks', 
+                url: '#article-5',
+                category: 'Valorant',
+                excerpt: 'Master Valorant with these professional tips and strategies...'
+            },
+            { 
+                title: 'Brawl Stars: Best Brawlers Guide', 
+                url: '#article-6',
+                category: 'Brawl Stars',
+                excerpt: 'Discover the most powerful brawlers and how to use them effectively...'
             }
         ];
 
         // Simulate API delay
-        await new Promise(resolve => setTimeout(resolve, 300));
-
-        return mockResults.filter(item => 
-            item.title.toLowerCase().includes(query.toLowerCase()) ||
-            item.excerpt.toLowerCase().includes(query.toLowerCase()) ||
-            item.category.toLowerCase().includes(query.toLowerCase())
-        );
+        return new Promise(resolve => {
+            setTimeout(() => {
+                const filteredResults = mockResults.filter(item => 
+                    item.title.toLowerCase().includes(query.toLowerCase()) ||
+                    item.excerpt.toLowerCase().includes(query.toLowerCase()) ||
+                    item.category.toLowerCase().includes(query.toLowerCase())
+                );
+                resolve(filteredResults);
+            }, 300);
+        });
     }
 
     displaySearchResults(results) {
+        if (!this.searchResults) return;
+        
         if (results.length === 0) {
-            this.searchResults.innerHTML = `
-                <div class="search-no-results">
-                    <p>No se encontraron resultados</p>
-                    <small>Intenta con otros términos de búsqueda</small>
-                </div>
-            `;
+            const noResultsElement = document.createElement('div');
+            noResultsElement.className = 'search-no-results';
+            
+            const message = document.createElement('p');
+            message.textContent = 'No results found';
+            
+            const subMessage = document.createElement('small');
+            subMessage.textContent = 'Try different search terms or keywords';
+            
+            noResultsElement.appendChild(message);
+            noResultsElement.appendChild(subMessage);
+            
+            this.searchResults.innerHTML = '';
+            this.searchResults.appendChild(noResultsElement);
             return;
         }
 
-        this.searchResults.innerHTML = results.map(item => `
-            <a href="${item.url}" class="search-result" data-category="${item.category}">
-                <div class="search-result-category">${item.category}</div>
-                <div class="search-result-title">${this.highlightQuery(item.title)}</div>
-                <div class="search-result-excerpt">${this.highlightQuery(item.excerpt)}</div>
-            </a>
-        `).join('');
-
-        // Add click handlers
-        $$('.search-result', this.searchResults).forEach(result => {
-            result.addEventListener('click', () => {
+        // Clear existing results
+        this.searchResults.innerHTML = '';
+        
+        // Ensure we only show maximum 3 results
+        const limitedResults = results.slice(0, 3);
+        
+        limitedResults.forEach(item => {
+            const resultElement = document.createElement('a');
+            resultElement.href = item.url;
+            resultElement.className = 'search-result';
+            resultElement.setAttribute('data-category', item.category);
+            resultElement.setAttribute('data-id', item.id || '');
+            
+            // Add image if available
+            if (item.image) {
+                const imageElement = document.createElement('div');
+                imageElement.className = 'search-result-image';
+                imageElement.style.backgroundImage = `url(${item.image})`;
+                resultElement.appendChild(imageElement);
+            }
+            
+            const contentContainer = document.createElement('div');
+            contentContainer.className = 'search-result-content';
+            
+            const categoryElement = document.createElement('div');
+            categoryElement.className = 'search-result-category';
+            categoryElement.textContent = item.category;
+            
+            const titleElement = document.createElement('div');
+            titleElement.className = 'search-result-title';
+            titleElement.innerHTML = this.highlightQuery(item.title);
+            
+            const excerptElement = document.createElement('div');
+            excerptElement.className = 'search-result-excerpt';
+            excerptElement.innerHTML = this.highlightQuery(item.excerpt);
+            
+            // Add channel name if available
+            if (item.youtubeChannelName) {
+                const channelElement = document.createElement('div');
+                channelElement.className = 'search-result-channel';
+                channelElement.textContent = `By: ${item.youtubeChannelName}`;
+                contentContainer.appendChild(channelElement);
+            }
+            
+            contentContainer.appendChild(categoryElement);
+            contentContainer.appendChild(titleElement);
+            contentContainer.appendChild(excerptElement);
+            resultElement.appendChild(contentContainer);
+            
+            // Add click handler for navigation
+            resultElement.addEventListener('click', (e) => {
+                e.preventDefault();
                 this.closeSearch();
-                // Handle navigation to result
+                
+                // Navigate to the detailed view
+                window.location.href = item.url;
             });
+            
+            this.searchResults.appendChild(resultElement);
         });
+
+        // Show success notification
+        notificationManager.success(`Search completed - ${limitedResults.length} results found`);
     }
 
     highlightQuery(text) {
@@ -204,21 +384,42 @@ class SearchManager {
     }
 
     showSearchLoading() {
-        this.searchResults.innerHTML = `
-            <div class="search-loading">
-                <div class="loading-spinner"></div>
-                <p>Buscando...</p>
-            </div>
-        `;
+        if (!this.searchResults) return;
+        
+        // Create loading element with proper DOM structure
+        const loadingElement = document.createElement('div');
+        loadingElement.className = 'search-loading';
+        
+        const spinner = document.createElement('div');
+        spinner.className = 'loading-spinner';
+        
+        const message = document.createElement('p');
+        message.textContent = 'Searching...';
+        
+        loadingElement.appendChild(spinner);
+        loadingElement.appendChild(message);
+        
+        this.searchResults.innerHTML = '';
+        this.searchResults.appendChild(loadingElement);
     }
 
     showSearchError() {
-        this.searchResults.innerHTML = `
-            <div class="search-error">
-                <p>❌ Error en la búsqueda</p>
-                <small>Inténtalo de nuevo más tarde</small>
-            </div>
-        `;
+        if (!this.searchResults) return;
+        
+        const errorElement = document.createElement('div');
+        errorElement.className = 'search-error';
+        
+        const icon = document.createElement('p');
+        icon.textContent = '❌ Search Error';
+        
+        const message = document.createElement('small');
+        message.textContent = 'Unable to fetch results. Please try again later.';
+        
+        errorElement.appendChild(icon);
+        errorElement.appendChild(message);
+        
+        this.searchResults.innerHTML = '';
+        this.searchResults.appendChild(errorElement);
     }
 
     addStyles() {
@@ -282,7 +483,9 @@ class SearchManager {
             }
             
             .search-result {
-                display: block;
+                display: flex;
+                align-items: flex-start;
+                gap: 1rem;
                 padding: 1rem;
                 color: var(--text-primary);
                 text-decoration: none;
@@ -295,6 +498,24 @@ class SearchManager {
             .search-result:hover {
                 background: var(--bg-secondary);
                 border-color: var(--primary-color);
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+            
+            .search-result-image {
+                width: 80px;
+                height: 60px;
+                background-size: cover;
+                background-position: center;
+                border-radius: var(--border-radius);
+                flex-shrink: 0;
+                background-color: var(--bg-secondary);
+                border: 1px solid var(--border-color);
+            }
+            
+            .search-result-content {
+                flex: 1;
+                min-width: 0;
             }
             
             .search-result-category {
@@ -307,13 +528,23 @@ class SearchManager {
             
             .search-result-title {
                 font-weight: 600;
-                margin-bottom: 0.25rem;
+                margin-bottom: 0.5rem;
+                line-height: 1.3;
+                font-size: 0.95rem;
             }
             
             .search-result-excerpt {
-                font-size: 0.875rem;
+                font-size: 0.85rem;
                 color: var(--text-secondary);
                 line-height: 1.4;
+                margin-bottom: 0.25rem;
+            }
+            
+            .search-result-channel {
+                font-size: 0.75rem;
+                color: var(--text-tertiary);
+                font-style: italic;
+                margin-bottom: 0.25rem;
             }
             
             .search-no-results,
@@ -344,6 +575,50 @@ class SearchManager {
                 color: white;
                 padding: 0.1em 0.2em;
                 border-radius: 0.2em;
+            }
+            
+            /* Responsive styles for mobile */
+            @media (max-width: 768px) {
+                .search-modal {
+                    padding: 0;
+                }
+                
+                .search-container {
+                    padding: 0.75rem;
+                }
+                
+                .search-input {
+                    font-size: 16px; /* Prevent zoom on iOS */
+                }
+                
+                .search-results {
+                    padding: 0.75rem;
+                    max-height: 60vh;
+                }
+                
+                .search-result {
+                    flex-direction: column;
+                    gap: 0.75rem;
+                }
+                
+                .search-result-image {
+                    width: 100%;
+                    height: 120px;
+                    align-self: center;
+                }
+                
+                .search-result-content {
+                    text-align: left;
+                }
+                
+                .search-result-title {
+                    font-size: 0.9rem;
+                    line-height: 1.2;
+                }
+                
+                .search-result-excerpt {
+                    font-size: 0.8rem;
+                }
             }
         `;
 

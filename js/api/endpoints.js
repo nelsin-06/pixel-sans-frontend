@@ -7,7 +7,19 @@ import { APP_CONFIG } from '../config/constants.js';
 import apiClient, { APIError } from './api-client.js';
 import { showError } from '../modules/notifications.js';
 
-class PostsAPI {
+export class PostsAPI {
+    /**
+     * Convert category code to English name for API requests
+     * @param {string} categoryCode - Internal category code
+     * @returns {string} English category name for API
+     */
+    convertCategoryToEnglish(categoryCode) {
+        if (!categoryCode) return categoryCode;
+        
+        // Use the mapping from constants
+        return APP_CONFIG.CATEGORY_TO_ENGLISH[categoryCode] || categoryCode;
+    }
+
     /**
      * Fetch paginated posts
      * @param {number} page - Page number (1-based)
@@ -17,10 +29,16 @@ class PostsAPI {
      */
     async getPosts(page = 1, pageSize = APP_CONFIG.API.DEFAULT_PAGE_SIZE, filters = {}) {
         try {
+            // Convert category code to English name if category filter is provided
+            const processedFilters = { ...filters };
+            if (processedFilters.category) {
+                processedFilters.category = this.convertCategoryToEnglish(processedFilters.category);
+            }
+
             const params = new URLSearchParams({
                 page: page.toString(),
                 pageSize: pageSize.toString(),
-                ...filters
+                ...processedFilters
             });
 
             const endpoint = `${APP_CONFIG.API.ENDPOINTS.POSTS}?${params}`;
@@ -110,7 +128,7 @@ class PostsAPI {
         const images = {
             'roblox': 'https://via.placeholder.com/400x250/667eea/ffffff?text=Roblox',
             'free-fire': 'https://via.placeholder.com/400x250/ef4444/ffffff?text=Free+Fire',
-            'codigos': 'https://via.placeholder.com/400x250/10b981/ffffff?text=Códigos',
+            'codigos': 'https://via.placeholder.com/400x250/10b981/ffffff?text=Code',
             'diamantes': 'https://via.placeholder.com/400x250/f59e0b/ffffff?text=Diamantes',
             'default': 'https://via.placeholder.com/400x250/6b7280/ffffff?text=Gaming'
         };
@@ -129,6 +147,34 @@ class PostsAPI {
             return await apiClient.get(endpoint);
         } catch (error) {
             console.error(`Error fetching post ${postId}:`, error);
+            throw error;
+        }
+    }
+
+    /**
+     * Search posts using the title parameter (specific endpoint format)
+     * @param {string} title - Search query for title
+     * @param {number} page - Page number (default: 1)
+     * @param {number} pageSize - Items per page (default: 10)
+     * @returns {Promise<Object>} Search results
+     */
+    async searchPostsByTitle(title, page = 1, pageSize = 3) {
+        try {
+            // Use the specific endpoint format: /post?page=1&pageSize=10&tittle=nombre
+            const params = new URLSearchParams({
+                page: page.toString(),
+                pageSize: pageSize.toString(),
+                title: title // Note: Using "tittle" as specified in the requirement
+            });
+
+            const endpoint = `${APP_CONFIG.API.ENDPOINTS.POSTS}?${params}`;
+            const response = await apiClient.get(endpoint);
+            
+            // Normalize response to expected format
+            return this.normalizeAPIResponse(response, page, pageSize);
+
+        } catch (error) {
+            console.error('Error searching posts by title:', error);
             throw error;
         }
     }
@@ -188,4 +234,5 @@ export default postsAPI;
 export const getPosts = (page, pageSize, filters) => postsAPI.getPosts(page, pageSize, filters);
 export const getPost = (postId) => postsAPI.getPost(postId);
 export const searchPosts = (query, options) => postsAPI.searchPosts(query, options);
+export const searchPostsByTitle = (title, page, pageSize) => postsAPI.searchPostsByTitle(title, page, pageSize);
 export const getPostsByCategory = (category, page, pageSize) => postsAPI.getPostsByCategory(category, page, pageSize);

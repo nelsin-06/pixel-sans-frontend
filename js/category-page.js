@@ -9,9 +9,10 @@ import { showSuccess, showError } from './modules/notifications.js';
 import { $, createElement, addEventListener } from './utils/dom-helpers.js';
 import { formatDate, truncateText } from './utils/helpers.js';
 
-// Import existing modules for theme and navigation
+// Import existing modules for theme, navigation, and accessibility
 import './modules/theme.js';
 import './modules/navigation.js';
+import './modules/accessibility.js';
 
 class CategoryPageManager {
     constructor() {
@@ -32,7 +33,21 @@ class CategoryPageManager {
             paginationContainer: $('#pagination-container')
         };
 
+        this.bindEvents();
         this.init();
+    }
+
+    /**
+     * Bind event listeners
+     */
+    bindEvents() {
+        // Bind retry button functionality
+        const retryButton = $('#retry-button');
+        if (retryButton) {
+            retryButton.addEventListener('click', () => {
+                window.location.reload();
+            });
+        }
     }
 
     /**
@@ -44,7 +59,7 @@ class CategoryPageManager {
             this.currentCategory = this.getCategoryFromURL();
             
             if (!this.currentCategory) {
-                this.showErrorState('No se especificó una categoría válida.');
+                this.showErrorState('Invalid category specified.');
                 return;
             }
 
@@ -54,9 +69,13 @@ class CategoryPageManager {
             // Load category content
             await this.loadCategoryContent();
             
+            // Show success notification when page is fully loaded
+            showSuccess(`${APP_CONFIG.MESSAGES.PAGE_LOADED_SUCCESS} - ${this.getCategoryDisplayName(this.currentCategory)}`);
+            
         } catch (error) {
             console.error('Error initializing category page:', error);
-            this.showErrorState('Error al cargar la página de categoría.');
+            showError('Error loading category page.');
+            this.showErrorState('Error loading category page.');
         }
     }
 
@@ -75,10 +94,13 @@ class CategoryPageManager {
     updatePageInfo() {
         const categoryDisplayName = this.getCategoryDisplayName(this.currentCategory);
         const categoryDescriptions = {
-            'roblox': 'Descubre guías, trucos y consejos para Roblox. Aprende cómo obtener Robux y dominar los mejores juegos.',
-            'free-fire': 'Estrategias, códigos y consejos para Free Fire. Mejora tu gameplay y consigue las mejores recompensas.',
-            'codigos': 'Los códigos más recientes para tus juegos favoritos. Obtén recompensas gratuitas y contenido exclusivo.',
-            'diamantes': 'Guías para conseguir diamantes gratis en tus juegos móviles favoritos de forma legal y segura.'
+            'roblox': 'Discover guides, tricks and tips for Roblox. Learn how to get Robux and master the best games.',
+            'free-fire': 'Strategies, codes and tips for Free Fire. Improve your gameplay and get the best rewards.',
+            'codigos': 'The latest codes for your favorite games. Get free rewards and exclusive content.',
+            'diamantes': 'Guides to get free diamonds in your favorite mobile games legally and safely.',
+            'valorant': 'Master Valorant with professional strategies, agent guides, and tactical tips.',
+            'brawl-stars': 'Dominate Brawl Stars with brawler guides, strategies, and advanced gameplay tips.',
+            'gems': 'Complete guides to earn gems and premium currency in popular mobile games.'
         };
 
         // Update page title
@@ -91,7 +113,7 @@ class CategoryPageManager {
         
         if (this.elements.categoryDescription) {
             this.elements.categoryDescription.textContent = 
-                categoryDescriptions[this.currentCategory] || 'Contenido especializado de gaming y tecnología.';
+                categoryDescriptions[this.currentCategory] || 'Specialized gaming and technology content.';
         }
         
         if (this.elements.currentCategoryBreadcrumb) {
@@ -163,8 +185,15 @@ class CategoryPageManager {
 
         } catch (error) {
             console.error('❌ Error loading category content:', error);
-            showError(`Error al cargar contenido de ${this.getCategoryDisplayName(this.currentCategory)}`);
-            this.showErrorState('Error al cargar el contenido. Por favor, inténtalo de nuevo.');
+            
+            // Show appropriate error message based on error type
+            let errorMessage = APP_CONFIG.MESSAGES.GENERIC_ERROR;
+            if (error.name === 'TypeError' || error.message.includes('fetch')) {
+                errorMessage = APP_CONFIG.MESSAGES.NETWORK_ERROR;
+            }
+            
+            showError(`Error loading ${this.getCategoryDisplayName(this.currentCategory)} content`);
+            this.showErrorState(errorMessage);
         } finally {
             this.isLoading = false;
             this.hideLoadingState();
@@ -357,10 +386,10 @@ class CategoryPageManager {
             <div class="pagination-controls">
                 <div class="pagination-info">
                     <span class="page-info">
-                        Página ${page} de ${totalPages}
+                        Page ${page} of ${totalPages}
                     </span>
                     <span class="items-info">
-                        ${totalItems} artículos encontrados
+                        ${totalItems} articles found
                     </span>
                 </div>
                 <div class="pagination-buttons">
@@ -495,6 +524,15 @@ class CategoryPageManager {
      */
     showLoadingState() {
         if (this.elements.loadingState) {
+            // Clear existing content and create proper loading elements
+            this.elements.loadingState.innerHTML = '';
+            
+            const spinner = createElement('div', { className: 'spinner' });
+            const loadingText = createElement('p');
+            loadingText.textContent = `${APP_CONFIG.MESSAGES.LOADING_PAGE} ${this.currentPage}...`;
+            
+            this.elements.loadingState.appendChild(spinner);
+            this.elements.loadingState.appendChild(loadingText);
             this.elements.loadingState.style.display = 'block';
         }
         if (this.elements.contentContainer) {
@@ -550,15 +588,27 @@ class CategoryPageManager {
         this.hideLoadingState();
         
         if (this.elements.contentContainer) {
-            this.elements.contentContainer.innerHTML = `
-                <div class="error-state">
-                    <h3>Error</h3>
-                    <p>${message}</p>
-                    <button class="btn-primary" onclick="window.location.reload()">
-                        Recargar página
-                    </button>
-                </div>
-            `;
+            // Clear existing content
+            this.elements.contentContainer.innerHTML = '';
+            
+            // Create error state elements
+            const errorContainer = createElement('div', { className: 'error-state' });
+            
+            const errorTitle = createElement('h3');
+            errorTitle.textContent = 'Error';
+            
+            const errorMessage = createElement('p');
+            errorMessage.textContent = message;
+            
+            const reloadButton = createElement('button', { className: 'btn-primary' });
+            reloadButton.textContent = 'Reload Page';
+            reloadButton.addEventListener('click', () => window.location.reload());
+            
+            errorContainer.appendChild(errorTitle);
+            errorContainer.appendChild(errorMessage);
+            errorContainer.appendChild(reloadButton);
+            
+            this.elements.contentContainer.appendChild(errorContainer);
         }
     }
 

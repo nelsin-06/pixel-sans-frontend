@@ -114,10 +114,10 @@ class PaginationManager {
         return `
             <div class="pagination-info" role="status" aria-live="polite">
                 <span class="page-info">
-                    Página <span class="current-page">1</span> de <span class="total-pages">1</span>
+                    Page <span class="current-page">1</span> of <span class="total-pages">1</span>
                 </span>
                 <span class="items-info">
-                    Mostrando <span class="items-range">1-10</span> de <span class="total-items">0</span> artículos
+                    Showing <span class="items-range">1-10</span> of <span class="total-items">0</span> articles
                 </span>
             </div>
         `;
@@ -167,7 +167,7 @@ class PaginationManager {
                     this.scrollToTop();
                 }
 
-                showSuccess(`Página ${page} cargada exitosamente`);
+                showSuccess(`Page ${page} loaded successfully`);
                 this.dispatchPageChangeEvent(page, data);
             } else {
                 throw new Error('Invalid API response');
@@ -175,7 +175,7 @@ class PaginationManager {
         } catch (error) {
             console.error('Error loading page:', error);
             this.showErrorState(error);
-            showError('Error al cargar el contenido');
+            showError(APP_CONFIG.MESSAGES.GENERIC_ERROR);
         } finally {
             this.state.isLoading = false;
         }
@@ -478,10 +478,23 @@ class PaginationManager {
         if (!this.elements.loadingElement) {
             this.elements.loadingElement = createElement('div', {
                 className: 'loading-card'
-            }, `
-                <div class="loading-spinner"></div>
-                <p>Cargando página ${this.state.currentPage}...</p>
-            `);
+            });
+            
+            // Create spinner element
+            const spinner = createElement('div', { className: 'loading-spinner' });
+            
+            // Create loading text
+            const loadingText = createElement('p');
+            loadingText.textContent = `${APP_CONFIG.MESSAGES.LOADING_PAGE} ${this.state.currentPage}...`;
+            
+            this.elements.loadingElement.appendChild(spinner);
+            this.elements.loadingElement.appendChild(loadingText);
+        } else {
+            // Update the loading text for the current page
+            const loadingText = this.elements.loadingElement.querySelector('p');
+            if (loadingText) {
+                loadingText.textContent = `${APP_CONFIG.MESSAGES.LOADING_PAGE} ${this.state.currentPage}...`;
+            }
         }
 
         this.elements.container.appendChild(this.elements.loadingElement);
@@ -509,7 +522,7 @@ class PaginationManager {
             <div class="error-icon">⚠️</div>
             <h3>Error al cargar la página</h3>
             <p>No se pudo cargar la página ${this.state.currentPage}. ${error.message}</p>
-            <button class="retry-btn">Reintentar</button>
+            <button class="retry-btn">Retry</button>
         `);
 
         const retryBtn = this.elements.errorElement.querySelector('.retry-btn');

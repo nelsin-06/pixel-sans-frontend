@@ -6,7 +6,7 @@
 export const APP_CONFIG = {
     // API Configuration
     API: {
-        BASE_URL: 'https://api.pixel-sans.com',
+        BASE_URL: 'https://api.pixel-sans.com',// 'https://api.pixel-sans.com',
         ENDPOINTS: {
             POSTS: '/post',
             SEARCH: '/search'
@@ -68,30 +68,66 @@ export const APP_CONFIG = {
         USER_PREFERENCES: 'pixelsan-preferences'
     },
 
-    // Categories
+    // Categories (internal codes)
     CATEGORIES: {
+        GEMS: 'gems', // New category added at top
         ROBLOX: 'roblox',
         FREE_FIRE: 'free-fire',
         CODES: 'codigos',
-        DIAMONDS: 'diamantes'
+        DIAMONDS: 'diamantes',
+        VALORANT: 'valorant',
+        BRAWL_STARS: 'brawl-stars',
+        CODE: 'code' // New category added at bottom
+    },
+
+    // Category to English Name Mapping (for API requests)
+    CATEGORY_TO_ENGLISH: {
+        'gems': 'gems',
+        'roblox': 'roblox',
+        'free-fire': 'free fire', // Remove hyphens
+        'codigos': 'codes', // Spanish to English
+        'diamantes': 'diamonds', // Spanish to English
+        'valorant': 'valorant',
+        'brawl-stars': 'brawl stars', // Remove hyphens
+        'code': 'code'
     },
 
     // Category Display Names
     CATEGORY_NAMES: {
+        'gems': 'Gems', // New category
         'roblox': 'Roblox',
         'free-fire': 'Free Fire',
-        'codigos': 'Códigos',
-        'diamantes': 'Diamantes',
+        'codigos': 'Codes',
+        'diamantes': 'Diamonds',
+        'valorant': 'Valorant',
+        'brawl-stars': 'Brawl Stars',
+        'code': 'Code', // New category
         'default': 'Gaming'
     },
 
     // Default Images by Category
     CATEGORY_IMAGES: {
+        'gems': 'https://via.placeholder.com/400x250/9b59b6/ffffff?text=Gems', // New category
         'roblox': 'https://via.placeholder.com/400x250/667eea/ffffff?text=Roblox',
         'free-fire': 'https://via.placeholder.com/400x250/ef4444/ffffff?text=Free+Fire',
-        'codigos': 'https://via.placeholder.com/400x250/10b981/ffffff?text=Códigos',
-        'diamantes': 'https://via.placeholder.com/400x250/f59e0b/ffffff?text=Diamantes',
+        'codigos': 'https://via.placeholder.com/400x250/10b981/ffffff?text=Codes',
+        'diamantes': 'https://via.placeholder.com/400x250/f59e0b/ffffff?text=Diamonds',
+        'valorant': 'https://via.placeholder.com/400x250/ff6b6b/ffffff?text=Valorant',
+        'brawl-stars': 'https://via.placeholder.com/400x250/4ecdc4/ffffff?text=Brawl+Stars',
+        'code': 'https://via.placeholder.com/400x250/34495e/ffffff?text=Code', // New category
         'default': 'https://via.placeholder.com/400x250/6b7280/ffffff?text=Gaming'
+    },
+
+    // Notification Messages
+    MESSAGES: {
+        PAGE_LOADED_SUCCESS: 'Page loaded successfully',
+        SEARCH_SUCCESS: 'Search completed',
+        SEARCH_ERROR: 'Search failed. Please try again.',
+        LOADING_CONTENT: 'Loading content...',
+        LOADING_PAGE: 'Loading page',
+        NO_RESULTS: 'No results found',
+        NETWORK_ERROR: 'Network error. Please check your connection.',
+        GENERIC_ERROR: 'Something went wrong. Please try again.'
     }
 };
 
