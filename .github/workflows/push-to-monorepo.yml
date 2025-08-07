@@ -1,0 +1,27 @@
+name: Push to monorepo
+
+on:
+  push:
+    branches:
+      - production
+
+jobs:
+  push-to-monorepo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout backend repo
+        uses: actions/checkout@v3
+
+      - name: Set up Git
+        run: |
+          git config --global user.email "nelsongg2001.dev@gmail.com"
+          git config --global user.name "nelsin-06"
+
+      - name: Clone monorepo
+        run: |
+          git clone https://x-access-token:${{secrets.MONOREPO_TOKEN}}@github.com/nelsin-06/pixel-sans.git
+          cd pixel-sans
+          git remote add backend https://github.com/nelsin-06/pixel-sans-backend.git
+          git fetch backend
+          git subtree pull --prefix=backend backend production --squash
+          git push origin main
