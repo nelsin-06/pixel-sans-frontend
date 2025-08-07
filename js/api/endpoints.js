@@ -7,6 +7,8 @@ import { APP_CONFIG } from '../config/constants.js';
 import apiClient, { APIError } from './api-client.js';
 import { showError } from '../modules/notifications.js';
 
+
+// some new changes to the API endpoints
 export class PostsAPI {
     /**
      * Convert category code to English name for API requests
