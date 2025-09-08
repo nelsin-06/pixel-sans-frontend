@@ -22,6 +22,7 @@ export default {
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
+          glow: "hsl(var(--primary-glow))",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
@@ -39,6 +40,16 @@ export default {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
         },
+        gaming: {
+          cyan: "hsl(var(--gaming-cyan))",
+          blue: "hsl(var(--gaming-blue))",
+          teal: "hsl(var(--gaming-teal))",
+          aqua: "hsl(var(--gaming-aqua))",
+          mint: "hsl(var(--gaming-mint))",
+          "light-mint": "hsl(var(--gaming-light-mint))",
+          DEFAULT: "hsl(var(--gaming))",
+          foreground: "hsl(var(--gaming-foreground))",
+        },
         popover: {
           DEFAULT: "hsl(var(--popover))",
           foreground: "hsl(var(--popover-foreground))",
@@ -46,6 +57,11 @@ export default {
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
+          hover: "hsl(var(--card-hover))",
+        },
+        ad: {
+          background: "hsl(var(--ad-background))",
+          border: "hsl(var(--ad-border))",
         },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
@@ -57,6 +73,21 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+      },
+      backgroundImage: {
+        "gradient-gaming": "var(--gradient-gaming)",
+        "gradient-vibrant": "var(--gradient-vibrant)",
+        "gradient-hero": "var(--gradient-hero)",
+        "gradient-card": "var(--gradient-card)",
+      },
+      boxShadow: {
+        gaming: "var(--shadow-gaming)",
+        glow: "var(--shadow-glow)",
+        card: "var(--shadow-card)",
+      },
+      transitionProperty: {
+        fast: "var(--transition-fast)",
+        smooth: "var(--transition-smooth)",
       },
       borderRadius: {
         lg: "var(--radius)",
