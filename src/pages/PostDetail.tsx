@@ -1,18 +1,49 @@
 import { useParams, Link } from "react-router-dom";
+import { useEffect } from "react";
 import { ArrowLeft, Calendar, Clock, User, Tag } from "lucide-react";
-import { mockPosts } from "@/data/mockPosts";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 import CommentSection from "@/components/CommentSection";
 import AdPlaceholder from "@/components/AdPlaceholder";
-import PostCard from "@/components/PostCard";
+import PostCard from "@/components/posts/PostCard";
 import { Button } from "@/components/ui/button";
+import { usePostDetail } from "@/hooks/usePostDetail";
+import { usePosts } from "@/hooks/usePosts/context";
 
 const PostDetail = () => {
-  const { id } = useParams();
-  const post = mockPosts.find((p) => p.id === id);
+  const { id = "" } = useParams();
+  const { post, loading, error } = usePostDetail(id);
   
-  if (!post) {
+  // Get posts from context
+  const { posts: allPosts, setCategory } = usePosts();
+
+  // Update category filter when post is loaded
+  useEffect(() => {
+    if (post?.category) {
+      const mainCategory = post.category.split(',')[0];
+      setCategory(mainCategory);
+    }
+  }, [post, setCategory]);
+
+  // Filter out the current post from related posts
+  const relatedPosts = allPosts.filter(p => p._id !== id);
+  
+  if (loading) {
+    return (
+      <div className="min-h-screen flex flex-col">
+        <NavBar />
+        <div className="flex-1 flex items-center justify-center">
+          <div className="text-center">
+            <h1 className="text-2xl font-bold mb-4">Loading post...</h1>
+            <div className="animate-pulse w-16 h-16 rounded-full bg-primary/20 mx-auto"></div>
+          </div>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+  
+  if (error || !post) {
     return (
       <div className="min-h-screen flex flex-col">
         <NavBar />
@@ -31,10 +62,24 @@ const PostDetail = () => {
     );
   }
 
-  // Get related posts (same category, excluding current)
-  const relatedPosts = mockPosts
-    .filter((p) => p.category === post.category && p.id !== post.id)
-    .slice(0, 3);
+  // Format the date for display
+  const formattedDate = new Date(post.createdAt).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+
+  // Parse categories
+  const categories = post.category.split(',').map(cat => cat.trim());
+  const mainCategory = categories[0] || 'General';
+
+  // Estimate read time based on content length (if we have secciones)
+  const readTime = `${Math.max(1, Math.ceil(post.title.length / 100))} min read`;
+
+  // Format content from post.secciones if available
+  const formattedContent = post.secciones ? 
+    post.secciones.map((section: any) => `<h2>${section.title || ''}</h2><p>${section.content || ''}</p>`).join('') :
+    '<p>No content available for this post.</p>';
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
@@ -57,15 +102,15 @@ const PostDetail = () => {
               <div className="flex flex-wrap items-center gap-3 mb-4">
                 <span className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-gradient-gaming text-primary-foreground text-sm font-medium">
                   <Tag className="h-4 w-4" />
-                  {post.category}
+                  {mainCategory}
                 </span>
                 <span className="flex items-center gap-1 text-sm text-muted-foreground">
                   <Calendar className="h-4 w-4" />
-                  {post.date}
+                  {formattedDate}
                 </span>
                 <span className="flex items-center gap-1 text-sm text-muted-foreground">
                   <Clock className="h-4 w-4" />
-                  {post.readTime}
+                  {readTime}
                 </span>
               </div>
               
@@ -75,7 +120,7 @@ const PostDetail = () => {
               
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <User className="h-4 w-4" />
-                <span>By {post.author}</span>
+                <span>By {post.youtubeChannelName || 'Unknown Author'}</span>
               </div>
             </header>
 
@@ -102,12 +147,12 @@ const PostDetail = () => {
                 prose-ol:text-muted-foreground prose-ol:mb-4
                 prose-li:mb-2
                 prose-strong:text-primary prose-strong:font-semibold"
-              dangerouslySetInnerHTML={{ __html: post.content }}
+              dangerouslySetInnerHTML={{ __html: formattedContent }}
             />
 
             {/* Tags */}
             <div className="flex flex-wrap gap-2 mb-8">
-              {post.tags.map((tag) => (
+              {categories.map((tag) => (
                 <span
                   key={tag}
                   className="px-3 py-1 bg-muted text-muted-foreground text-sm rounded-full hover:bg-primary/10 hover:text-primary transition-colors cursor-pointer"
@@ -137,7 +182,7 @@ const PostDetail = () => {
                   <h3 className="text-xl font-bold mb-4">Related Posts</h3>
                   <div className="space-y-4">
                     {relatedPosts.map((relatedPost) => (
-                      <PostCard key={relatedPost.id} {...relatedPost} />
+                      <PostCard key={relatedPost._id} post={relatedPost} />
                     ))}
                   </div>
                 </div>

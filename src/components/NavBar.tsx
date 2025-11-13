@@ -3,27 +3,34 @@ import { Search, Gamepad2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import ThemeToggle from "./ThemeToggle";
+import { useState, useEffect } from "react";
+import { usePosts } from "@/hooks/usePosts/context";
 
 const categories = [
-  { name: "HOME", path: "/" },
-  { name: "GEMS", path: "/category/gems" },
-  { name: "ROBLOX", path: "/category/roblox" },
-  { name: "FREE FIRE", path: "/category/free-fire" },
-  { name: "DIAMONDS", path: "/category/diamonds" },
-  { name: "VALORANT", path: "/category/valorant" },
-  { name: "BRAWL STARS", path: "/category/brawl-stars" },
-  { name: "CODE", path: "/category/code" },
+  { name: "ALL", path: "/", value: "all" },
+  { name: "GEMS", path: "/", value: "gems" },
+  { name: "ROBLOX", path: "/", value: "roblox" },
+  { name: "FREE FIRE", path: "/", value: "free fire" },
+  { name: "DIAMONDS", path: "/", value: "diamonds" },
+  { name: "VALORANT", path: "/", value: "valorant" },
+  { name: "BRAWL STARS", path: "/", value: "brawl stars" },
+  { name: "CODE", path: "/", value: "code" },
 ];
 
 const NavBar = () => {
   const location = useLocation();
+  const [searchTerm, setSearchTerm] = useState("");
+  
+  // Get access to the global posts state to manipulate filters
+  const { setSearchTerm: setGlobalSearchTerm } = usePosts();
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Connect to search API
-    // const searchTerm = e.target.search.value;
-    // searchAPI(searchTerm);
-    console.log("Search functionality ready for backend integration");
+    const form = e.target as HTMLFormElement;
+    const formData = new FormData(form);
+    const term = formData.get("search") as string;
+    setSearchTerm(term);
+    setGlobalSearchTerm(term);
   };
 
   return (
@@ -43,6 +50,12 @@ const NavBar = () => {
               <Input
                 type="search"
                 name="search"
+                value={searchTerm}
+                onChange={(e) => {
+                  setSearchTerm(e.target.value);
+                  // El debounce está implementado en el hook usePosts
+                  setGlobalSearchTerm(e.target.value);
+                }}
                 placeholder="Search games, guides, codes..."
                 className="w-80 pr-10 bg-muted/50 border-muted focus:border-primary"
               />
@@ -61,22 +74,32 @@ const NavBar = () => {
 
         {/* Category Navigation */}
         <nav className="flex gap-1 overflow-x-auto pb-3 scrollbar-hide">
-          {categories.map((category) => (
-            <Link
-              key={category.name}
-              to={category.path}
-              className={`
-                px-4 py-2 rounded-md text-sm font-medium whitespace-nowrap transition-all
-                ${
-                  location.pathname === category.path
-                    ? "bg-gradient-gaming text-primary-foreground shadow-gaming"
-                    : "hover:bg-muted text-muted-foreground hover:text-foreground"
-                }
-              `}
-            >
-              {category.name}
-            </Link>
-          ))}
+          {(() => {
+            // Usamos una IIFE para poder usar hooks dentro del render
+            const { setCategory, currentCategory } = usePosts();
+            
+            return categories.map((category) => {
+              const isActive = category.value === currentCategory || 
+                            (category.value === "all" && !currentCategory);
+              
+              return (
+                <button
+                  key={category.name}
+                  onClick={() => setCategory(category.value)}
+                  className={`
+                    px-4 py-2 rounded-md text-sm font-medium whitespace-nowrap transition-all
+                    ${
+                      isActive
+                        ? "bg-gradient-gaming text-primary-foreground shadow-gaming"
+                        : "hover:bg-muted text-muted-foreground hover:text-foreground"
+                    }
+                  `}
+                >
+                  {category.name}
+                </button>
+              );
+            });
+          })()}
         </nav>
       </div>
     </header>

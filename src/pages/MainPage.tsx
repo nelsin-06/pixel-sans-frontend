@@ -1,19 +1,9 @@
-import { useState } from "react";
-import { mockPosts } from "@/data/mockPosts";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
-import PostCard from "@/components/PostCard";
-import Pagination from "@/components/Pagination";
 import AdPlaceholder from "@/components/AdPlaceholder";
+import PostsListView from "@/components/posts/PostsListView";
 
 const MainPage = () => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const postsPerPage = 6;
-  const totalPages = Math.ceil(mockPosts.length / postsPerPage);
-
-  const indexOfLastPost = currentPage * postsPerPage;
-  const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = mockPosts.slice(indexOfFirstPost, indexOfLastPost);
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
@@ -35,30 +25,11 @@ const MainPage = () => {
           <AdPlaceholder type="leaderboard" className="mb-8" />
         </div>
 
-        {/* Posts Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-          {currentPosts.map((post, index) => (
-            <div key={post.id}>
-              <PostCard {...post} />
-              {/* Ad after every 3 posts on mobile, hidden on larger screens */}
-              {(index + 1) % 3 === 0 && index !== currentPosts.length - 1 && (
-                <div className="mt-6 md:hidden">
-                  <AdPlaceholder type="square" />
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
+        {/* Posts List View with API Integration */}
+        <PostsListView />
 
         {/* Middle Ad Placement */}
-        <AdPlaceholder type="banner" className="mb-8" />
-
-        {/* Pagination */}
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={setCurrentPage}
-        />
+        <AdPlaceholder type="banner" className="my-8" />
 
         {/* Bottom Ad Placement */}
         <div className="mt-8">
