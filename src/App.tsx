@@ -6,6 +6,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@/hooks/useTheme";
 import MainPage from "./pages/MainPage";
 import PostDetail from "./pages/PostDetail";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import LegalNotice from "./pages/LegalNotice";
+import TermsAndConditions from "./pages/TermsAndConditions";
 import NotFound from "./pages/NotFound";
 import { PostsProvider } from "@/hooks/usePosts/context";
 
@@ -23,10 +26,10 @@ const App = () => (
               <Route path="/" element={<MainPage />} />
               <Route path="/post/:id" element={<PostDetail />} />
               <Route path="/category/:category" element={<MainPage />} />
-              {/* Legal Pages - Can be implemented later */}
-              <Route path="/privacy-policy" element={<NotFound />} />
-              <Route path="/legal-notice" element={<NotFound />} />
-              <Route path="/terms" element={<NotFound />} />
+              {/* Legal Pages */}
+              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+              <Route path="/legal-notice" element={<LegalNotice />} />
+              <Route path="/terms" element={<TermsAndConditions />} />
               <Route path="/contact" element={<NotFound />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
