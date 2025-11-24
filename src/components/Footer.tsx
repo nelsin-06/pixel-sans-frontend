@@ -1,17 +1,27 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Gamepad2 } from "lucide-react";
+import { usePosts } from "@/hooks/usePosts/context";
 
 const categories = [
-  { name: "Gems", path: "/category/gems" },
-  { name: "Roblox", path: "/category/roblox" },
-  { name: "Free Fire", path: "/category/free-fire" },
-  { name: "Diamonds", path: "/category/diamonds" },
-  { name: "Valorant", path: "/category/valorant" },
-  { name: "Brawl Stars", path: "/category/brawl-stars" },
-  { name: "Code", path: "/category/code" },
+  { name: "Gems", value: "gems" },
+  { name: "Roblox", value: "roblox" },
+  { name: "Free Fire", value: "free fire" },
+  { name: "Diamonds", value: "diamonds" },
+  { name: "Valorant", value: "valorant" },
+  { name: "Brawl Stars", value: "brawl stars" },
+  { name: "Code", value: "code" },
 ];
 
 const Footer = () => {
+  const { setCategory } = usePosts();
+  const navigate = useNavigate();
+
+  const handleCategoryClick = (value: string) => {
+    setCategory(value);
+    navigate("/");
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <footer className="mt-auto border-t border-border bg-background">
       <div className="container mx-auto px-4 py-8">
@@ -31,13 +41,13 @@ const Footer = () => {
         {/* Quick Links - Categories */}
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4 mb-8">
           {categories.map((category) => (
-            <Link
+            <button
               key={category.name}
-              to={category.path}
-              className="text-sm text-muted-foreground hover:text-primary transition-colors text-center"
+              onClick={() => handleCategoryClick(category.value)}
+              className="text-sm text-muted-foreground hover:text-primary transition-colors text-center bg-transparent border-none cursor-pointer"
             >
               {category.name}
-            </Link>
+            </button>
           ))}
         </div>
 

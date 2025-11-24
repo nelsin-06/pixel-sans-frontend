@@ -1,9 +1,9 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Search, Gamepad2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import ThemeToggle from "./ThemeToggle";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { usePosts } from "@/hooks/usePosts/context";
 
 const categories = [
@@ -19,10 +19,11 @@ const categories = [
 
 const NavBar = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   
   // Get access to the global posts state to manipulate filters
-  const { setSearchTerm: setGlobalSearchTerm } = usePosts();
+  const { setSearchTerm: setGlobalSearchTerm, setCategory, currentCategory } = usePosts();
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,6 +32,18 @@ const NavBar = () => {
     const term = formData.get("search") as string;
     setSearchTerm(term);
     setGlobalSearchTerm(term);
+    
+    if (location.pathname !== "/") {
+      navigate("/");
+    }
+  };
+
+  const handleCategoryClick = (categoryValue: string) => {
+    setCategory(categoryValue);
+    if (location.pathname !== "/") {
+      navigate("/");
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -74,32 +87,27 @@ const NavBar = () => {
 
         {/* Category Navigation */}
         <nav className="flex gap-1 overflow-x-auto pb-3 scrollbar-hide">
-          {(() => {
-            // Usamos una IIFE para poder usar hooks dentro del render
-            const { setCategory, currentCategory } = usePosts();
+          {categories.map((category) => {
+            const isActive = category.value === currentCategory || 
+                          (category.value === "all" && !currentCategory);
             
-            return categories.map((category) => {
-              const isActive = category.value === currentCategory || 
-                            (category.value === "all" && !currentCategory);
-              
-              return (
-                <button
-                  key={category.name}
-                  onClick={() => setCategory(category.value)}
-                  className={`
-                    px-4 py-2 rounded-md text-sm font-medium whitespace-nowrap transition-all
-                    ${
-                      isActive
-                        ? "bg-gradient-gaming text-primary-foreground shadow-gaming"
-                        : "hover:bg-muted text-muted-foreground hover:text-foreground"
-                    }
-                  `}
-                >
-                  {category.name}
-                </button>
-              );
-            });
-          })()}
+            return (
+              <button
+                key={category.name}
+                onClick={() => handleCategoryClick(category.value)}
+                className={`
+                  px-4 py-2 rounded-md text-sm font-medium whitespace-nowrap transition-all
+                  ${
+                    isActive
+                      ? "bg-gradient-gaming text-primary-foreground shadow-gaming"
+                      : "hover:bg-muted text-muted-foreground hover:text-foreground"
+                  }
+                `}
+              >
+                {category.name}
+              </button>
+            );
+          })}
         </nav>
       </div>
     </header>
