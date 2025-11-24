@@ -1,6 +1,5 @@
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
-import AdPlaceholder from "@/components/AdPlaceholder";
 import PostsListView from "@/components/posts/PostsListView";
 
 const MainPage = () => {
@@ -21,20 +20,11 @@ const MainPage = () => {
             </p>
           </div>
           
-          {/* Top Ad Placement */}
-          <AdPlaceholder type="leaderboard" className="mb-8" />
         </div>
 
         {/* Posts List View with API Integration */}
         <PostsListView />
 
-        {/* Middle Ad Placement */}
-        <AdPlaceholder type="banner" className="my-8" />
-
-        {/* Bottom Ad Placement */}
-        <div className="mt-8">
-          <AdPlaceholder type="leaderboard" />
-        </div>
       </main>
 
       <Footer />

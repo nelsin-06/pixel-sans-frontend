@@ -4,7 +4,6 @@ import { ArrowLeft, Calendar, Clock, User, Tag } from "lucide-react";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 import CommentSection from "@/components/CommentSection";
-import AdPlaceholder from "@/components/AdPlaceholder";
 import PostCard from "@/components/posts/PostCard";
 import { Button } from "@/components/ui/button";
 import { usePostDetail } from "@/hooks/usePostDetail";
@@ -133,9 +132,6 @@ const PostDetail = () => {
               />
             </div>
 
-            {/* Ad Placement */}
-            <AdPlaceholder type="banner" className="mb-8" />
-
             {/* Post Content */}
             <div 
               className="prose prose-lg max-w-none mb-8 
@@ -162,9 +158,6 @@ const PostDetail = () => {
               ))}
             </div>
 
-            {/* Ad Placement */}
-            <AdPlaceholder type="leaderboard" className="mb-8" />
-
             {/* Comments */}
             <CommentSection />
           </article>
@@ -173,9 +166,7 @@ const PostDetail = () => {
           <aside className="lg:col-span-1">
             {/* Sticky Sidebar Content */}
             <div className="sticky top-24 space-y-8">
-              {/* Ad Placement */}
-              <AdPlaceholder type="sidebar" />
-
+              
               {/* Related Posts */}
               {relatedPosts.length > 0 && (
                 <div>
@@ -188,8 +179,6 @@ const PostDetail = () => {
                 </div>
               )}
 
-              {/* Another Ad */}
-              <AdPlaceholder type="square" />
             </div>
           </aside>
         </div>

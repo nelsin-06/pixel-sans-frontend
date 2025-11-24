@@ -1,6 +1,5 @@
 import PostCard from "./PostCard";
 import { Post } from "@/api/postService";
-import AdPlaceholder from "@/components/AdPlaceholder";
 
 interface PostGridProps {
   posts: Post[];
@@ -43,12 +42,6 @@ const PostGrid = ({ posts, loading = false }: PostGridProps) => {
       {posts.map((post, index) => (
         <div key={post._id}>
           <PostCard post={post} />
-          {/* Ad after every 3 posts on mobile, hidden on larger screens */}
-          {(index + 1) % 3 === 0 && index !== posts.length - 1 && (
-            <div className="mt-6 md:hidden">
-              <AdPlaceholder type="square" />
-            </div>
-          )}
         </div>
       ))}
     </div>
