@@ -10,6 +10,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import LegalNotice from "./pages/LegalNotice";
 import TermsAndConditions from "./pages/TermsAndConditions";
 import Contact from "./pages/Contact";
+import Generator from "./pages/Generator";
 import NotFound from "./pages/NotFound";
 import { PostsProvider } from "@/hooks/usePosts/context";
 
@@ -32,6 +33,7 @@ const App = () => (
               <Route path="/legal-notice" element={<LegalNotice />} />
               <Route path="/terms" element={<TermsAndConditions />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path="/generator" element={<Generator />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
